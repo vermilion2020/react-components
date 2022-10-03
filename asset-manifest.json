@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.525c57ad.css",
+    "main.js": "/static/js/main.2110b471.js",
+    "static/js/787.b701888c.chunk.js": "/static/js/787.b701888c.chunk.js",
+    "static/media/kite-image.jpg": "/static/media/kite-image.05ff35477454759edbf9.jpg",
+    "static/media/Flysurfer-Peak.png": "/static/media/Flysurfer-Peak.800ae5216d59964e07c9.png",
+    "static/media/Flysurfer-Mojo.png": "/static/media/Flysurfer-Mojo.4136fa12a16ccc8be82a.png",
+    "static/media/Airush-One-Progression.png": "/static/media/Airush-One-Progression.626d6301b998af24de0f.png",
+    "static/media/Eleveight-RS.jpg": "/static/media/Eleveight-RS.9dca7f73cad2a17514de.jpg",
+    "static/media/Airush-One.jpg": "/static/media/Airush-One.2afbd0c8b770b503fda5.jpg",
+    "static/media/Reedin-Super-Wing.jpg": "/static/media/Reedin-Super-Wing.f53ad51c035bf600cde3.jpg",
+    "static/media/PLKB-Lynx.jpg": "/static/media/PLKB-Lynx.2b8253c7e322900fbdbc.jpg",
+    "static/media/Cross-Kites-Quattro.jpg": "/static/media/Cross-Kites-Quattro.8a53baa6d6c12be6ecd7.jpg",
+    "static/media/Airush-Freewing-Air-2.jpg": "/static/media/Airush-Freewing-Air-2.deeb58d9718e1105a867.jpg",
+    "static/media/404.png": "/static/media/404.17d7994f097ec7e77966.png",
+    "static/media/Cabrinha-Mantis-Wing.png": "/static/media/Cabrinha-Mantis-Wing.8e1ea17b0c8061e8c16b.png",
+    "static/media/Airush-Freewing-Air.jpg": "/static/media/Airush-Freewing-Air.ef5f0fa2eed875827783.jpg",
+    "static/media/Ozone-Summit.jpg": "/static/media/Ozone-Summit.dc0c40ec5954bb67c1d2.jpg",
+    "index.html": "/index.html",
+    "static/media/star-active.svg": "/static/media/star-active.7acdd2a048746e69822e.svg",
+    "static/media/star-grey.svg": "/static/media/star-grey.cfe812ef792976e26ad2.svg",
+    "static/media/star-hover.svg": "/static/media/star-hover.06aa2b8e2c497d403f6d.svg",
+    "main.525c57ad.css.map": "/static/css/main.525c57ad.css.map",
+    "main.2110b471.js.map": "/static/js/main.2110b471.js.map",
+    "787.b701888c.chunk.js.map": "/static/js/787.b701888c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.525c57ad.css",
+    "static/js/main.2110b471.js"
+  ]
+}
