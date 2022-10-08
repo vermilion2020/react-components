@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.552e03ad.css",
-    "main.js": "/static/js/main.ee170668.js",
+    "main.js": "/static/js/main.8076e428.js",
     "static/js/787.b701888c.chunk.js": "/static/js/787.b701888c.chunk.js",
     "static/media/kite-image.jpg": "/static/media/kite-image.05ff35477454759edbf9.jpg",
     "static/media/Flysurfer-Peak.png": "/static/media/Flysurfer-Peak.800ae5216d59964e07c9.png",
@@ -22,11 +22,11 @@
     "static/media/star-grey.svg": "/static/media/star-grey.cfe812ef792976e26ad2.svg",
     "static/media/star-hover.svg": "/static/media/star-hover.06aa2b8e2c497d403f6d.svg",
     "main.552e03ad.css.map": "/static/css/main.552e03ad.css.map",
-    "main.ee170668.js.map": "/static/js/main.ee170668.js.map",
+    "main.8076e428.js.map": "/static/js/main.8076e428.js.map",
     "787.b701888c.chunk.js.map": "/static/js/787.b701888c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.552e03ad.css",
-    "static/js/main.ee170668.js"
+    "static/js/main.8076e428.js"
   ]
 }
