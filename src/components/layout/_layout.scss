@@ -1,0 +1,46 @@
+.app-header, 
+.app-footer {
+  background-color: $mainBgFontColor;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: $whiteBgFontColor;
+}
+
+.footer-container {
+  width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.rsschool {
+  margin-left: 20px;
+  height: 55px;
+  width: 110px;
+}
+
+.rsschool:hover path {
+  fill: $activeLinkColor;
+}
+
+.copyright {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.copyright a {
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.copyright a:hover {
+  text-decoration: underline;
+}
+
+.github {
+  color: $whiteBgFontColor;
+}

@@ -1,0 +1,21 @@
+.items-list {
+  max-width: 1200px;
+  margin: 20px auto 20px;
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: Arial, Helvetica, sans-serif;
+  gap: 20px;
+} 
+
+.search-input {
+  margin-top: 20px;
+  width: 300px;
+  height: 40px;
+  font-size: 12px;
+  padding-left: 19px;
+  border-radius: 10px;
+  padding: 10px;
+}
