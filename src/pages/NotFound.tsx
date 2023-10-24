@@ -1,3 +1,5 @@
+import notFoundImage from '../assets/404-error.jpg';
+
 function NotFound() {
   return (
     <div className="content not-found">
@@ -8,7 +10,7 @@ function NotFound() {
       <div className="content--desctiption">
         Check the URL or ask for help if you are sure that it is correct
       </div>
-      <img src="404-error.jpg" alt="Not found" />
+      <img className="not-found-img" src={notFoundImage} alt="Not found" />
     </div>
   );
 }

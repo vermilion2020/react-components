@@ -1,13 +1,12 @@
-export interface IItem {
-  name: string;
-  value: string;
-}
+import { IEpisode } from './response.interface';
 
 export interface IItemProps {
-  item: IItem;
+  item: IEpisode;
 }
 
 export interface IState {
-  items: IItem[];
-  searchTerm: '';
+  error: string;
+  isLoading: boolean;
+  items: IEpisode[];
+  searchTerm: string;
 }

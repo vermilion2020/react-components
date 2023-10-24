@@ -1,6 +1,6 @@
 @import 'components/layout/_base-style';
 @import 'components/layout/_layout';
-@import 'components/main/_main';
+@import 'components/search/_search';
 
 h1 {
   font-size: 1.2em;
@@ -67,23 +67,14 @@ body::-webkit-scrollbar-thumb {
   box-sizing: border-box;
 }
 
-.content--heading {
-  font-weight: 500;
-  font-size: 1.2rem;
-}
-
-.content--description {
-  font-size: 1.1rem;
-}
-
 .not-found {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
 
-  img {
-    width: 800px;
-    height: 600px;
-  }
+.not-found-img {
+  width: 800px;
+  height: 600px;
 }
