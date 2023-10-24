@@ -10,7 +10,7 @@ function Footer() {
             rel="noreferrer"
           >
             vermilion2020
-          </a>{" "}
+          </a>{' '}
           2023
         </p>
         <a

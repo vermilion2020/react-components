@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import Layout from "./components/layout/Layout";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import Layout from './components/layout/Layout';
 
 function App() {
   return (
@@ -24,4 +24,4 @@ function WrappedApp() {
   );
 }
 
-export default WrappedApp;
+export { App, WrappedApp };

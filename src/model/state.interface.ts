@@ -9,5 +9,5 @@ export interface IItemProps {
 
 export interface IState {
   items: IItem[];
-  searchTerm: "";
+  searchTerm: '';
 }

@@ -20,11 +20,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "types": ["node", "jest", "@testing-library/jest-dom"],
   "include": [
     "src",
     ".eslintrc.cjs",
     "vite.config.ts",
-    "prettierrc.cjs",
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

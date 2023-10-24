@@ -1,6 +1,7 @@
 function NotFound() {
   return (
     <div className="content not-found">
+      <h2>Not Found</h2>
       <div className="content--heading">
         Page you are requesting does not exist
       </div>

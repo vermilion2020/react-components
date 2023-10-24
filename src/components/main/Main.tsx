@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import SearchBar from "../searchbar/SearchBar";
+import React, { Component } from 'react';
+import SearchBar from '../searchbar/SearchBar';
 
 class Main extends Component {
   searchRef: React.RefObject<HTMLInputElement> =
@@ -8,7 +8,7 @@ class Main extends Component {
   constructor() {
     super({
       items: [],
-      searchTerm: "",
+      searchTerm: '',
     });
   }
 
