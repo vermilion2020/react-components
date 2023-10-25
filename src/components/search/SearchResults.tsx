@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { AxiosResponse } from 'axios';
 import { IState } from '../../model/state.interface';
 import { IAPIResponse, IEpisode } from '../../model/response.interface';
