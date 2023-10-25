@@ -1,10 +1,10 @@
 export interface IAPIResponse {
   page: Page;
   sort: Sort;
-  episodes: IEpisode[];
+  episodes: IItem[];
 }
 
-export interface IEpisode {
+export interface IItem {
   uid: string;
   title: string;
   titleGerman: string;

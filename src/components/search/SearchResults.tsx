@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { AxiosResponse } from 'axios';
 import { IState } from '../../model/state.interface';
-import { IAPIResponse, IEpisode } from '../../model/response.interface';
-import axios, { DEFAULT_PAGE_SIZE, EPISODES } from '../../axios-config';
+import { IAPIResponse, IItem } from '../../model/response.interface';
+import axios, { EPISODES_SEARCH_URI } from '../../axios-config';
 import Card from './Card';
 
 interface DefaultState {
@@ -16,14 +16,11 @@ class SearchResults extends Component<DefaultState, IState> {
   }
 
   componentDidMount() {
+    const { pageSize, pageNumber } = this.state;
     axios
-      .get(`${EPISODES}?pageNumber=0&pageSize=${DEFAULT_PAGE_SIZE}`)
-      .catch((error) => {
-        this.setState({
-          error,
-          isLoading: false,
-        });
-      })
+      .get(
+        `${EPISODES_SEARCH_URI}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+      )
       .then((result) => {
         const data = (result as AxiosResponse).data as IAPIResponse;
         this.setState({
@@ -43,7 +40,7 @@ class SearchResults extends Component<DefaultState, IState> {
         {isLoading && <div>Loading...</div>}
         {!isLoading &&
           !error &&
-          items.map((item: IEpisode) => <Card item={item} key={item.uid} />)}
+          items.map((item: IItem) => <Card item={item} key={item.uid} />)}
       </div>
     );
   }

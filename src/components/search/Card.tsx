@@ -1,7 +1,7 @@
-import { IEpisode } from '../../model/response.interface';
+import { IItem } from '../../model/response.interface';
 
 interface ICardProps {
-  item: IEpisode;
+  item: IItem;
 }
 
 function Card({ item }: ICardProps) {

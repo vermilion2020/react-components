@@ -1,12 +1,14 @@
-import { IEpisode } from './response.interface';
+import { IItem } from './response.interface';
 
 export interface IItemProps {
-  item: IEpisode;
+  item: IItem;
 }
 
 export interface IState {
   error: string;
   isLoading: boolean;
-  items: IEpisode[];
+  items: IItem[];
+  pageSize: number;
+  pageNumber: number;
   searchTerm: string;
 }
