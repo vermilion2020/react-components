@@ -38,27 +38,19 @@
 }
 
 .card-item {
-  width: 250px;
-  height: 80px;
+  width: 220px;
+  height: 60px;
   border: 1px solid $baseLinkColor;
   border-radius: 0.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   padding: 0.5rem;
-  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
 
   &:hover {
     box-shadow: 0px 2px 6px $baseLinkColor;
   }
-}
-
-.card-item--title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  max-width: 230px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .card-item--season {
@@ -68,4 +60,25 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card-item--image {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5rem;
+}
+
+.card-item--description {
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+
+  .login {
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 }

@@ -1,44 +1,27 @@
 export interface IAPIResponse {
-  page: Page;
-  sort: Sort;
-  episodes: IItem[];
+  total_count: number;
+  incomplete_results: boolean;
+  items: IItem[];
 }
 
 export interface IItem {
-  uid: string;
-  title: string;
-  titleGerman: string;
-  titleItalian: null | string;
-  titleJapanese: null | string;
-  series: Season;
-  season: Season;
-  seasonNumber: number;
-  episodeNumber: number;
-  productionSerialNumber: string;
-  featureLength: boolean;
-  stardateFrom: number | null;
-  stardateTo: number | null;
-  yearFrom: number | null;
-  yearTo: number | null;
-  usAirDate: Date;
-  finalScriptDate: null;
-}
-
-export interface Season {
-  uid: string;
-  title: string;
-}
-
-export interface Page {
-  pageNumber: number;
-  pageSize: number;
-  numberOfElements: number;
-  totalElements: number;
-  totalPages: number;
-  firstPage: boolean;
-  lastPage: boolean;
-}
-
-export interface Sort {
-  clauses: string[];
+  login: string;
+  id: number;
+  node_id: string;
+  avatar_url: string;
+  gravatar_id: string;
+  url: string;
+  html_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  starred_url: string;
+  subscriptions_url: string;
+  organizations_url: string;
+  repos_url: string;
+  events_url: string;
+  received_events_url: string;
+  type: string;
+  site_admin: boolean;
+  score: number;
 }
