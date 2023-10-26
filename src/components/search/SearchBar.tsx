@@ -3,6 +3,8 @@ interface ISearchBarProps {
   searchTerm: string;
 }
 
+export const PLACEHOLDER_TEXT = 'Search for a character of Rick and Morty';
+
 function SearchBar({ searchTerm, forwardRef }: ISearchBarProps) {
   return (
     <div className="search">
@@ -12,7 +14,7 @@ function SearchBar({ searchTerm, forwardRef }: ISearchBarProps) {
         className="search-input"
         type="search"
         id="search-input"
-        placeholder="Search for a character of Rick and Morty"
+        placeholder={PLACEHOLDER_TEXT}
         defaultValue={searchTerm}
         autoComplete="off"
       />

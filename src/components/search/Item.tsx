@@ -5,9 +5,9 @@ interface ICardProps {
   imagesTurnedOn: boolean;
 }
 
-function Card({ item, imagesTurnedOn }: ICardProps) {
+function Item({ item, imagesTurnedOn }: ICardProps) {
   return (
-    <div className="card-item">
+    <div className="card-item" data-testid="card-item">
       {imagesTurnedOn && (
         <img className="card-item--image" src={item.image} alt={item.name} />
       )}
@@ -23,4 +23,4 @@ function Card({ item, imagesTurnedOn }: ICardProps) {
   );
 }
 
-export default Card;
+export default Item;

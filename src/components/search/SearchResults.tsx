@@ -2,6 +2,8 @@ import Preloader from '../Preloader';
 import { IItem } from '../../model/response.interface';
 import Item from './Item';
 
+export const NO_ITEMS_MESSAGE = 'No items found for the current search term';
+
 interface ISearchResultsProps {
   isLoading: boolean;
   error: string;
@@ -15,9 +17,7 @@ function SearchResults({ isLoading, error, items }: ISearchResultsProps) {
       {error && <div>{error}</div>}
       {isLoading && <Preloader />}
       {!isLoading && !error && !items.length && (
-        <div className="no-items-message">
-          No items found for the current search term
-        </div>
+        <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
       )}
       {!isLoading &&
         !error &&

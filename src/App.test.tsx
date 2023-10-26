@@ -5,9 +5,8 @@ import { App, WrappedApp } from './App';
 
 describe('App tests', () => {
   it('Renders React Components the first level heading', () => {
-    // Arrange
     render(<WrappedApp />);
-    // Expect
+
     expect(
       screen.getByRole('heading', {
         level: 1,
@@ -16,13 +15,12 @@ describe('App tests', () => {
   });
 
   it('Renders Not Found page if it is not existing', () => {
-    // Arrange
     render(
       <MemoryRouter initialEntries={['/not-existing-url']}>
         <App />
       </MemoryRouter>
     );
-    // Expect
+
     expect(
       screen.getByRole('heading', {
         level: 2,
