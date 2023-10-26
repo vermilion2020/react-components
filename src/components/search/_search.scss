@@ -30,7 +30,7 @@
 .search-results-section {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: space-around;
   gap: 0.7rem 1rem;
   flex-direction: row;
   flex-wrap: wrap;
@@ -95,4 +95,16 @@
     font-size: 0.9rem;
     font-weight: 700;
   }
+}
+
+.preloader {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-self: center;
+}
+
+.preloader--img {
+  width: 70px;
+  height: 70px;
 }

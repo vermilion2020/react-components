@@ -1,10 +1,11 @@
 import { Component, createRef } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { IState } from '../../model/state.interface';
 import { IAPIResponse, IItem } from '../../model/response.interface';
 import axios, { SEARCH_URI } from '../../axios-config';
 import Item from './Item';
 import SearchBar from './SearchBar';
+import Preloader from '../Preloader';
 
 interface DefaultState {
   defaultState: IState;
@@ -19,6 +20,10 @@ class Search extends Component<DefaultState, IState> {
 
   getItems() {
     const { pageNumber, debounced } = this.state;
+    this.setState({
+      ...this.state,
+      isLoading: true,
+    });
     axios
       .get(`${SEARCH_URI}?page=${pageNumber}&name=${debounced}`)
       .then((result) => {
@@ -30,6 +35,14 @@ class Search extends Component<DefaultState, IState> {
           ...this.state,
           isLoading: false,
           items: data,
+        });
+      })
+      .catch((err: AxiosError) => {
+        const error = err.message;
+        this.setState({
+          ...this.state,
+          isLoading: false,
+          error,
         });
       });
   }
@@ -72,7 +85,7 @@ class Search extends Component<DefaultState, IState> {
         </section>
         <section className="search-results-section">
           {error && <div>{error}</div>}
-          {isLoading && <div>Loading...</div>}
+          {isLoading && <Preloader />}
           {!isLoading && !error && !items.length && (
             <div className="no-items-message">
               No items found for the current search term
