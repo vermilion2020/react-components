@@ -3,9 +3,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { IState } from '../../model/state.interface';
 import { IAPIResponse, IItem } from '../../model/response.interface';
 import axios, { SEARCH_URI } from '../../axios-config';
-import Item from './Item';
 import SearchBar from './SearchBar';
-import Preloader from '../Preloader';
+import SearchResults from './SearchResults';
 
 interface DefaultState {
   defaultState: IState;
@@ -19,13 +18,13 @@ class Search extends Component<DefaultState, IState> {
   }
 
   getItems() {
-    const { pageNumber, debounced } = this.state;
+    const { pageNumber, searchTerm } = this.state;
     this.setState({
       ...this.state,
       isLoading: true,
     });
     axios
-      .get(`${SEARCH_URI}?page=${pageNumber}&name=${debounced}`)
+      .get(`${SEARCH_URI}?page=${pageNumber}&name=${searchTerm}`)
       .then((result) => {
         let data = [] as IItem[];
         if ('data' in result) {
@@ -47,32 +46,28 @@ class Search extends Component<DefaultState, IState> {
       });
   }
 
-  setDebounced(searchTerm: string) {
-    const handler = setTimeout(() => {
-      this.setState({ ...this.state, debounced: searchTerm });
-    }, 300);
-    return () => clearTimeout(handler);
-  }
-
   componentDidMount() {
     this.getItems();
   }
 
-  componentDidUpdate(_: Readonly<DefaultState>, prevState: Readonly<IState>) {
-    const { debounced, searchTerm } = this.state;
-    if (prevState.debounced !== debounced && debounced === searchTerm) {
-      this.getItems();
+  componentDidUpdate(_: DefaultState, prevState: IState) {
+    const { error, searchTerm } = this.state;
+    const { searchTerm: oldSearchTerm } = prevState;
+    if (error) {
+      throw new Error(error);
     }
-    if (this.state.error) {
-      throw new Error('I crashed!');
+    if (searchTerm !== oldSearchTerm) {
+      this.getItems();
     }
   }
 
-  handleSearchTermchange = (searchTerm: string) => {
-    const term = searchTerm.trim();
-    window.localStorage.setItem('searchTerm', `${term}`);
-    this.setDebounced(term);
-    this.setState({ ...this.state, searchTerm });
+  handleSearchTermchange = () => {
+    const { searchTerm: oldSearchTerm } = this.state;
+    const searchTerm = this.searchRef.current?.value.trim() ?? '';
+    if (oldSearchTerm !== searchTerm) {
+      window.localStorage.setItem('searchTerm', `${searchTerm}`);
+      this.setState({ ...this.state, searchTerm });
+    }
   };
 
   setError = () => {
@@ -84,28 +79,15 @@ class Search extends Component<DefaultState, IState> {
     return (
       <div className="search-container">
         <section className="search-bar-section">
-          <SearchBar
-            searchTerm={searchTerm}
-            handleSearchTermChange={this.handleSearchTermchange}
-            forwardRef={this.searchRef}
-          />
+          <SearchBar searchTerm={searchTerm} forwardRef={this.searchRef} />
+          <button className="button" onClick={this.handleSearchTermchange}>
+            Search
+          </button>
           <button className="button" onClick={this.setError}>
-            Break
+            Cause Error
           </button>
         </section>
-        <section className="search-results-section">
-          {error && <div>{error}</div>}
-          {isLoading && <Preloader />}
-          {!isLoading && !error && !items.length && (
-            <div className="no-items-message">
-              No items found for the current search term
-            </div>
-          )}
-          {!isLoading &&
-            !error &&
-            items.length !== 0 &&
-            items.map((item: IItem) => <Item item={item} key={item.id} />)}
-        </section>
+        <SearchResults isLoading={isLoading} error={error} items={items} />
       </div>
     );
   }

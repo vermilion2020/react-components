@@ -13,7 +13,6 @@ function Home() {
     pageNumber: DEFAULT_PAGE_NUMBER,
     pageSize: DEFAULT_PAGE_SIZE,
     searchTerm,
-    debounced: searchTerm,
   };
 
   return (

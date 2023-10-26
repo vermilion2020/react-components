@@ -6,6 +6,7 @@ function Fallback() {
         src="./fallback.jpg"
         alt="Something went wrong"
       />
+      <p>Oops, an error occur...</p>
       <p>Run away from an error!</p>
       <button
         className="button"

@@ -4,6 +4,7 @@
   min-height: 10vh;
   display: flex;
   align-items: center;
+  gap: 3rem;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: $whiteBgFontColor;
@@ -42,4 +43,12 @@
 
 .github {
   color: $whiteBgFontColor;
+}
+
+.images-link {
+  font-size: 1.1rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

@@ -1,21 +1,9 @@
-import { ChangeEvent } from 'react';
-
 interface ISearchBarProps {
   forwardRef: React.RefObject<HTMLInputElement>;
   searchTerm: string;
-  handleSearchTermChange: (searchTerm: string) => void;
 }
 
-function SearchBar({
-  searchTerm,
-  forwardRef,
-  handleSearchTermChange,
-}: ISearchBarProps) {
-  const handleChange = (e: ChangeEvent) => {
-    const target = (e.target as HTMLInputElement).value as string;
-    handleSearchTermChange(target);
-  };
-
+function SearchBar({ searchTerm, forwardRef }: ISearchBarProps) {
   return (
     <div className="search">
       <input
@@ -25,8 +13,7 @@ function SearchBar({
         type="search"
         id="search-input"
         placeholder="Search for a character of Rick and Morty"
-        value={searchTerm}
-        onChange={handleChange}
+        defaultValue={searchTerm}
         autoComplete="off"
       />
     </div>
