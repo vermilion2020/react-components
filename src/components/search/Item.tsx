@@ -7,18 +7,14 @@ interface ICardProps {
 function Card({ item }: ICardProps) {
   return (
     <div className="card-item">
-      <img
-        className="card-item--image"
-        src={item.avatar_url}
-        alt="user avatar"
-      />
+      <img className="card-item--image" src={item.image} alt={item.name} />
       <div className="card-item--description">
-        <div className="login" title={item.login}>
-          Login: {item.login}
+        <div className="info-line" title={item.name}>
+          {item.name}
         </div>
-        <a href={item.url} target="_blank" rel="noreferrer">
-          Repos
-        </a>
+        <div className="info-line">
+          <span className="sup-info">Season:</span> {item.location.name}
+        </div>
       </div>
     </div>
   );

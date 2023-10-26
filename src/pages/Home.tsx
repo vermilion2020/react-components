@@ -1,11 +1,10 @@
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../axios-config';
 import ErrorBoundary from '../components/ErrorBoundary';
-import SearchResults from '../components/search/SearchResults';
-import SearchBar from '../components/search/SearchBar';
+import Search from '../components/search/Search';
 import { IState } from '../model/state.interface';
 
 function Home() {
-  const searchTerm = localStorage.getItem('searchTerm') ?? '';
+  const searchTerm = (localStorage.getItem('searchTerm') ?? '').trim();
   const defaultState: IState = {
     isLoading: true,
     error: '',
@@ -13,15 +12,15 @@ function Home() {
     pageNumber: DEFAULT_PAGE_NUMBER,
     pageSize: DEFAULT_PAGE_SIZE,
     searchTerm,
+    debounced: searchTerm,
   };
 
   return (
     <div className="content">
-      <SearchBar searchTerm="" handleSearchTermChange={() => {}} />
       <ErrorBoundary
         fallback={<div className="error-message">Something went wrong</div>}
       >
-        <SearchResults defaultState={defaultState} />
+        <Search defaultState={defaultState} />
       </ErrorBoundary>
     </div>
   );

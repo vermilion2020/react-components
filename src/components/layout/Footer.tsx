@@ -13,8 +13,18 @@ function Footer() {
           </a>{' '}
           2023
         </p>
+        <p className="copyright">
+          <a
+            href="https://rickandmortyapi.com/"
+            className="github"
+            target="_blank"
+            rel="noreferrer"
+          >
+            R & M API
+          </a>{' '}
+        </p>
         <a
-          href="https://rs.school/js/"
+          href="https://rs.school/react/"
           target="_blank"
           className="link-rs"
           rel="noreferrer"

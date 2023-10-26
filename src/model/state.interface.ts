@@ -11,4 +11,5 @@ export interface IState {
   pageSize: number;
   pageNumber: number;
   searchTerm: string;
+  debounced: string;
 }

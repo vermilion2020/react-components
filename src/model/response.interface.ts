@@ -1,27 +1,32 @@
 export interface IAPIResponse {
-  total_count: number;
-  incomplete_results: boolean;
-  items: IItem[];
+  info: Info;
+  results: IItem[];
+}
+
+export interface Info {
+  count: number;
+  pages: number;
+  next: string;
+  prev?: null;
 }
 
 export interface IItem {
-  login: string;
   id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
+  name: string;
+  status: string;
+  species: string;
   type: string;
-  site_admin: boolean;
-  score: number;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode?: string[] | null;
+  url: string;
+  created: string;
 }

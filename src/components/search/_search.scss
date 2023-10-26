@@ -1,12 +1,12 @@
 @import '../layout/_base-style';
 
-.items-list {
+.search-container {
   max-width: 1200px;
   margin: 20px auto 20px;
   display: flex;
   justify-content: space-between;  
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   font-family: Arial, Helvetica, sans-serif;
   gap: 20px;
@@ -20,6 +20,20 @@
   padding-left: 19px;
   border-radius: 10px;
   padding: 10px;
+}
+
+.search-bar-section {
+  max-height: 100px;
+  width: 100%;
+}
+
+.search-results-section {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 0.7rem 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .content--heading {
@@ -38,8 +52,8 @@
 }
 
 .card-item {
-  width: 220px;
-  height: 60px;
+  width: 260px;
+  height: 70px;
   border: 1px solid $baseLinkColor;
   border-radius: 0.5rem;
   display: flex;
@@ -53,13 +67,9 @@
   }
 }
 
-.card-item--season {
-  font-size: 1rem;
-  font-weight: 400;
-  max-width: 230px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.no-items-message {
+  display: flex;
+  justify-self: center;
 }
 
 .card-item--image {
@@ -69,16 +79,20 @@
 }
 
 .card-item--description {
-  max-width: 150px;
+  max-width: 190px;
   display: flex;
   flex-direction: column;
 
-  .login {
+  .info-line {
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  .sup-info {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
 }
