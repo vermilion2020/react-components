@@ -63,6 +63,9 @@ class Search extends Component<DefaultState, IState> {
     if (prevState.debounced !== debounced && debounced === searchTerm) {
       this.getItems();
     }
+    if (this.state.error) {
+      throw new Error('I crashed!');
+    }
   }
 
   handleSearchTermchange = (searchTerm: string) => {
@@ -70,6 +73,10 @@ class Search extends Component<DefaultState, IState> {
     window.localStorage.setItem('searchTerm', `${term}`);
     this.setDebounced(term);
     this.setState({ ...this.state, searchTerm });
+  };
+
+  setError = () => {
+    this.setState({ ...this.state, error: 'Component crashed!' });
   };
 
   render() {
@@ -82,6 +89,9 @@ class Search extends Component<DefaultState, IState> {
             handleSearchTermChange={this.handleSearchTermchange}
             forwardRef={this.searchRef}
           />
+          <button className="button" onClick={this.setError}>
+            Break
+          </button>
         </section>
         <section className="search-results-section">
           {error && <div>{error}</div>}

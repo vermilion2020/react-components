@@ -13,18 +13,19 @@
 } 
 
 .search-input {
-  margin-top: 20px;
   width: 300px;
   height: 40px;
-  font-size: 12px;
-  padding-left: 19px;
+  font-size: 1.1rem;
   border-radius: 10px;
-  padding: 10px;
 }
 
 .search-bar-section {
   max-height: 100px;
   width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-results-section {

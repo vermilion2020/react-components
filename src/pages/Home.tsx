@@ -1,5 +1,6 @@
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../axios-config';
 import ErrorBoundary from '../components/ErrorBoundary';
+import Fallback from '../components/Fallback';
 import Search from '../components/search/Search';
 import { IState } from '../model/state.interface';
 
@@ -17,9 +18,7 @@ function Home() {
 
   return (
     <div className="content">
-      <ErrorBoundary
-        fallback={<div className="error-message">Something went wrong</div>}
-      >
+      <ErrorBoundary fallback={<Fallback />}>
         <Search defaultState={defaultState} />
       </ErrorBoundary>
     </div>
