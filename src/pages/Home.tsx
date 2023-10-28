@@ -1,17 +1,16 @@
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../axios-config';
-import ErrorBoundary from '../components/ErrorBoundary';
-import Fallback from '../components/Fallback';
-import Search from '../components/search/Search';
+import { DEFAULT_PAGE_NUMBER } from '../axios-config';
+import ErrorBoundary from '../components/error-boundary/ErrorBoundary';
+import Fallback from '../components/error-boundary/Fallback';
+import Search from '../components/search/SearchContainer';
 import { IState } from '../model/state.interface';
 
-function Home() {
+function HomePage() {
   const searchTerm = (localStorage.getItem('searchTerm') ?? '').trim();
   const defaultState: IState = {
     isLoading: true,
     error: '',
     items: [],
     pageNumber: DEFAULT_PAGE_NUMBER,
-    pageSize: DEFAULT_PAGE_SIZE,
     searchTerm,
   };
 
@@ -24,4 +23,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

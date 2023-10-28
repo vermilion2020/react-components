@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
+import HomePage from './pages/Home';
+import NotFoundPage from './pages/NotFound';
 import Layout from './components/layout/Layout';
 
 function App() {
@@ -8,8 +8,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </div>

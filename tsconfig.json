@@ -19,13 +19,9 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true
   },
   "types": ["node", "jest", "@testing-library/jest-dom"],
-  "include": [
-    "src",
-    ".eslintrc.cjs",
-    "vite.config.ts",
-  ],
+  "include": ["src", ".eslintrc.cjs", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

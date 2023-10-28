@@ -1,5 +1,5 @@
 import Preloader from '../Preloader';
-import { IItem } from '../../model/response.interface';
+import { IItem } from '../../../model/response.interface';
 import Item from './Item';
 
 export const NO_ITEMS_MESSAGE = 'No items found for the current search term';

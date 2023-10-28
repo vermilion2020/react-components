@@ -1,8 +1,14 @@
 import axios, { AxiosError } from 'axios';
 
 export const SEARCH_URI = 'character/';
-export const DEFAULT_PAGE_SIZE = 20;
 export const DEFAULT_PAGE_NUMBER = 0;
+const THROTTLING = 700;
+
+const sleep = (delay: number) => {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, delay);
+  });
+};
 
 axios.defaults.baseURL = 'https://rickandmortyapi.com/api/';
 
@@ -17,7 +23,10 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  (response) => response,
+  async (response) => {
+    await sleep(THROTTLING);
+    return response;
+  },
   (error: AxiosError) => {
     if (error.response?.status === 404) {
       return [];

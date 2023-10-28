@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "test": "vitest run",
     "lint": "tsc --noEmit && eslint ./src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "fix": "eslint . --ext ts,tsx --fix",
+    "format:fix": "prettier . --write --color",
     "preview": "vite preview",
     "prepare": "husky install"
   },

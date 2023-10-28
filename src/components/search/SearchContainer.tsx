@@ -4,13 +4,13 @@ import { IState } from '../../model/state.interface';
 import { IAPIResponse, IItem } from '../../model/response.interface';
 import axios, { SEARCH_URI } from '../../axios-config';
 import SearchBar from './SearchBar';
-import SearchResults from './SearchResults';
+import SearchResults from './results/SearchResults';
 
 interface DefaultState {
   defaultState: IState;
 }
 
-class Search extends Component<DefaultState, IState> {
+class SearchContainer extends Component<DefaultState, IState> {
   searchRef: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   constructor(props: DefaultState) {
     super(props);
@@ -24,7 +24,7 @@ class Search extends Component<DefaultState, IState> {
       isLoading: true,
     });
     axios
-      .get(`${SEARCH_URI}?page=${pageNumber}&name=${searchTerm}`)
+      .get(SEARCH_URI, { params: { page: pageNumber, name: searchTerm } })
       .then((result) => {
         let data = [] as IItem[];
         if ('data' in result) {
@@ -93,4 +93,4 @@ class Search extends Component<DefaultState, IState> {
   }
 }
 
-export default Search;
+export default SearchContainer;

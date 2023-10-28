@@ -1,4 +1,4 @@
-import { IItem } from '../../model/response.interface';
+import { IItem } from '../../../model/response.interface';
 
 interface ICardProps {
   item: IItem;
@@ -16,7 +16,10 @@ function Item({ item, imagesTurnedOn }: ICardProps) {
           {item.name}
         </div>
         <div className="info-line">
-          <span className="sup-info">Season:</span> {item.location.name}
+          <span className="sup-info" title={item.location.name}>
+            Location:
+          </span>{' '}
+          {item.location.name}
         </div>
       </div>
     </div>
