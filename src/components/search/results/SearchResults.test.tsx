@@ -26,19 +26,19 @@ describe('Renders Search results section', () => {
   ];
 
   it('Search results list is displayed', () => {
-    render(<SearchResults items={items} error="" isLoading={false} />);
+    render(<SearchResults items={items} isLoading={false} />);
     const itemCards = screen.getAllByTestId('card-item');
     expect(itemCards.length).toEqual(items.length);
   });
 
   it('No items message is shown when search results are empty', () => {
-    render(<SearchResults items={[]} error="" isLoading={false} />);
+    render(<SearchResults items={[]} isLoading={false} />);
     const message = screen.getByText(NO_ITEMS_MESSAGE);
     expect(message).toBeVisible();
   });
 
   it('Preloader is shown when data is loading', () => {
-    render(<SearchResults items={[]} error="" isLoading={true} />);
+    render(<SearchResults items={[]} isLoading={true} />);
     const preloader = screen.getByTestId('preloader');
     expect(preloader).toBeVisible();
   });

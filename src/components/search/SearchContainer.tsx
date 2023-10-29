@@ -17,8 +17,8 @@ class SearchContainer extends Component<DefaultState, IState> {
     this.state = props.defaultState;
   }
 
-  getItems() {
-    const { pageNumber, searchTerm } = this.state;
+  getItems(searchTerm: string) {
+    const { pageNumber } = this.state;
     this.setState({
       ...this.state,
       isLoading: true,
@@ -34,6 +34,7 @@ class SearchContainer extends Component<DefaultState, IState> {
           ...this.state,
           isLoading: false,
           items: data,
+          searchTerm,
         });
       })
       .catch((err: AxiosError) => {
@@ -42,31 +43,27 @@ class SearchContainer extends Component<DefaultState, IState> {
           ...this.state,
           isLoading: false,
           error,
+          searchTerm,
         });
       });
   }
 
   componentDidMount() {
-    this.getItems();
+    this.getItems(this.state.searchTerm);
   }
 
-  componentDidUpdate(_: DefaultState, prevState: IState) {
-    const { error, searchTerm } = this.state;
-    const { searchTerm: oldSearchTerm } = prevState;
-    if (error) {
-      throw new Error(error);
-    }
-    if (searchTerm !== oldSearchTerm) {
-      this.getItems();
+  componentDidUpdate() {
+    if (this.state.error) {
+      throw new Error(this.state.error);
     }
   }
 
-  handleSearchTermchange = () => {
+  handleSearchClick = () => {
     const { searchTerm: oldSearchTerm } = this.state;
     const searchTerm = this.searchRef.current?.value.trim() ?? '';
     if (oldSearchTerm !== searchTerm) {
       window.localStorage.setItem('searchTerm', `${searchTerm}`);
-      this.setState({ ...this.state, searchTerm });
+      this.getItems(searchTerm);
     }
   };
 
@@ -75,19 +72,19 @@ class SearchContainer extends Component<DefaultState, IState> {
   };
 
   render() {
-    const { isLoading, error, items, searchTerm } = this.state;
+    const { isLoading, items, searchTerm } = this.state;
     return (
       <div className="search-container">
         <section className="search-bar-section">
           <SearchBar searchTerm={searchTerm} forwardRef={this.searchRef} />
-          <button className="button" onClick={this.handleSearchTermchange}>
+          <button className="button" onClick={this.handleSearchClick}>
             Search
           </button>
           <button className="button" onClick={this.setError}>
-            Cause Error
+            Get an Error
           </button>
         </section>
-        <SearchResults isLoading={isLoading} error={error} items={items} />
+        <SearchResults isLoading={isLoading} items={items} />
       </div>
     );
   }

@@ -6,21 +6,18 @@ export const NO_ITEMS_MESSAGE = 'No items found for the current search term';
 
 interface ISearchResultsProps {
   isLoading: boolean;
-  error: string;
   items: IItem[];
 }
 
-function SearchResults({ isLoading, error, items }: ISearchResultsProps) {
+function SearchResults({ isLoading, items }: ISearchResultsProps) {
   const imagesTurnedOn = !!localStorage.getItem('images');
   return (
     <section className="search-results-section">
-      {error && <div>{error}</div>}
       {isLoading && <Preloader />}
-      {!isLoading && !error && !items.length && (
+      {!isLoading && !items.length && (
         <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
       )}
       {!isLoading &&
-        !error &&
         items.length !== 0 &&
         items.map((item: IItem) => (
           <Item item={item} key={item.id} imagesTurnedOn={imagesTurnedOn} />
