@@ -29,7 +29,7 @@ axios.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response?.status === 404) {
-      return [];
+      return error.response;
     } else if (error.response?.status === 500) {
       console.log('Unexpected error occurs');
     }

@@ -1,5 +1,5 @@
 interface ISearchBarProps {
-  forwardRef: React.RefObject<HTMLInputElement>;
+  forwardRef: React.RefObject<HTMLInputElement> | null;
   searchTerm: string;
 }
 

@@ -1,93 +1,75 @@
-import { Component, createRef } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
-import { IState } from '../../model/state.interface';
 import { IAPIResponse, IItem } from '../../model/response.interface';
 import axios, { SEARCH_URI } from '../../axios-config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
 
-interface DefaultState {
-  defaultState: IState;
-}
+function SearchContainer() {
+  const defaultSearchTerm = (localStorage.getItem('searchTerm') ?? '').trim();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([] as IItem[]);
+  const searchInput = useRef() as MutableRefObject<HTMLInputElement>;
 
-class SearchContainer extends Component<DefaultState, IState> {
-  searchRef: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
-  constructor(props: DefaultState) {
-    super(props);
-    this.state = props.defaultState;
-  }
+  useEffect(() => {
+    if (error) {
+      throw new Error(error);
+    }
+    getItems(defaultSearchTerm);
+  }, [defaultSearchTerm, error]);
 
-  getItems(searchTerm: string) {
-    const { pageNumber } = this.state;
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    });
-    axios
-      .get(SEARCH_URI, { params: { page: pageNumber, name: searchTerm } })
-      .then((result) => {
-        let data = [] as IItem[];
-        if ('data' in result) {
-          data = ((result as AxiosResponse).data as IAPIResponse).results;
-        }
-        this.setState({
-          ...this.state,
-          isLoading: false,
-          items: data,
-          searchTerm,
-        });
+  const fetchItems = async (searchTerm: string, pageNumber: number) => {
+    await axios
+      .get(SEARCH_URI, {
+        params: { page: pageNumber, name: searchTerm },
       })
-      .catch((err: AxiosError) => {
-        const error = err.message;
-        this.setState({
-          ...this.state,
-          isLoading: false,
-          error,
-          searchTerm,
-        });
+      .then((result) => {
+        const data = (result as AxiosResponse).data as IAPIResponse;
+        'error' in data ? setItems([] as IItem[]) : setItems(data.results);
+      })
+      .catch(function (e) {
+        const err = e as AxiosError;
+        setItems([] as IItem[]);
+        setError(err.message);
       });
-  }
-
-  componentDidMount() {
-    this.getItems(this.state.searchTerm);
-  }
-
-  componentDidUpdate() {
-    if (this.state.error) {
-      throw new Error(this.state.error);
-    }
-  }
-
-  handleSearchClick = () => {
-    const { searchTerm: oldSearchTerm } = this.state;
-    const searchTerm = this.searchRef.current?.value.trim() ?? '';
-    if (oldSearchTerm !== searchTerm) {
-      window.localStorage.setItem('searchTerm', `${searchTerm}`);
-      this.getItems(searchTerm);
-    }
   };
 
-  setError = () => {
-    this.setState({ ...this.state, error: 'Component crashed!' });
-  };
-
-  render() {
-    const { isLoading, items, searchTerm } = this.state;
-    return (
-      <div className="search-container">
-        <section className="search-bar-section">
-          <SearchBar searchTerm={searchTerm} forwardRef={this.searchRef} />
-          <button className="button" onClick={this.handleSearchClick}>
-            Search
-          </button>
-          <button className="button" onClick={this.setError}>
-            Get an Error
-          </button>
-        </section>
-        <SearchResults isLoading={isLoading} items={items} />
-      </div>
-    );
+  async function getItems(searchTerm: string) {
+    setLoading(true);
+    await fetchItems(searchTerm, 0);
+    setLoading(false);
   }
+
+  const handleSearchClick = async () => {
+    const searchTerm = searchInput.current.value.trim();
+    window.localStorage.setItem('searchTerm', `${searchTerm}`);
+    await getItems(searchTerm);
+  };
+  return (
+    <div className="search-container">
+      <section className="search-bar-section">
+        <SearchBar searchTerm={defaultSearchTerm} forwardRef={searchInput} />
+        <button
+          className="button"
+          onClick={() => {
+            handleSearchClick();
+          }}
+        >
+          Search
+        </button>
+        <button
+          className="button"
+          onClick={() => {
+            setError('Error!!!');
+          }}
+        >
+          Get an Error
+        </button>
+      </section>
+      <SearchResults isLoading={loading} items={items} />
+    </div>
+  );
 }
 
 export default SearchContainer;
