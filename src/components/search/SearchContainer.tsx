@@ -4,6 +4,7 @@ import { IAPIResponse, IItem } from '../../model/response.interface';
 import axios, { SEARCH_URI } from '../../axios-config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
+import { useParams } from 'react-router-dom';
 
 function SearchContainer() {
   const defaultSearchTerm = (localStorage.getItem('searchTerm') ?? '').trim();
@@ -11,6 +12,7 @@ function SearchContainer() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([] as IItem[]);
   const searchInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const { page: currentPage } = useParams();
 
   useEffect(() => {
     if (error) {
@@ -19,10 +21,11 @@ function SearchContainer() {
     getItems(defaultSearchTerm);
   }, [defaultSearchTerm, error]);
 
-  const fetchItems = async (searchTerm: string, pageNumber: number) => {
+  const fetchItems = async (searchTerm: string) => {
+    const page = currentPage ? +currentPage : 0;
     await axios
       .get(SEARCH_URI, {
-        params: { page: pageNumber, name: searchTerm },
+        params: { page, name: searchTerm },
       })
       .then((result) => {
         const data = (result as AxiosResponse).data as IAPIResponse;
@@ -37,7 +40,7 @@ function SearchContainer() {
 
   async function getItems(searchTerm: string) {
     setLoading(true);
-    await fetchItems(searchTerm, 0);
+    await fetchItems(searchTerm);
     setLoading(false);
   }
 
@@ -46,6 +49,7 @@ function SearchContainer() {
     window.localStorage.setItem('searchTerm', `${searchTerm}`);
     await getItems(searchTerm);
   };
+
   return (
     <div className="search-container">
       <section className="search-bar-section">
