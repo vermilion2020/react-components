@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
 
-export const SEARCH_URI = 'character/';
+export const SEARCH_URI = 'beers/';
 export const DEFAULT_PAGE_NUMBER = 0;
-const THROTTLING = 700;
+export const DEFAULT_PER_PAGE = 20;
+const THROTTLING = 300;
 
 const sleep = (delay: number) => {
   return new Promise(function (resolve) {
@@ -10,7 +11,7 @@ const sleep = (delay: number) => {
   });
 };
 
-axios.defaults.baseURL = 'https://rickandmortyapi.com/api/';
+axios.defaults.baseURL = 'https://api.punkapi.com/v2/';
 
 axios.interceptors.request.use(
   (config) => config,

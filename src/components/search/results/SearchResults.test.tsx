@@ -4,24 +4,32 @@ import SearchResults, { NO_ITEMS_MESSAGE } from './SearchResults';
 describe('Renders Search results section', () => {
   const items = [
     {
-      id: 1,
-      name: 'Rick Sanchez',
-      status: 'Alive',
-      species: 'Human',
-      type: '',
-      gender: 'Male',
-      origin: {
-        name: 'Earth (C-137)',
-        url: 'https://rickandmortyapi.com/api/location/1',
+      id: 63,
+      name: 'Sunk Punk',
+      tagline: 'Ocean Fermented Lager.',
+      first_brewed: '09/2011',
+      description:
+        "It's rumoured just a drop can calm the fiercest of storms. A balance of sweet, salt and savoury, citrus, spruce and caramel. Fermented at the bottom of the North Sea, which just so happens to be the perfect temperature for lagers to ferment.",
+      image_url: 'https://images.punkapi.com/v2/63.png',
+      abv: 7.1,
+      ibu: 68,
+      target_fg: 1010,
+      target_og: 1056,
+      ebc: 14,
+      srm: 7,
+      ph: 4.4,
+      attenuation_level: 82.1,
+      volume: {
+        value: 20,
+        unit: 'litres',
       },
-      location: {
-        name: 'Citadel of Ricks',
-        url: 'https://rickandmortyapi.com/api/location/3',
+      boil_volume: {
+        value: 25,
+        unit: 'litres',
       },
-      image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-      episode: ['https://rickandmortyapi.com/api/episode/1'],
-      url: 'https://rickandmortyapi.com/api/character/1',
-      created: '2017-11-04T18:48:46.250Z',
+      food_pairing: ['Salt baked cod with lemon and dill butter'],
+      brewers_tips: '',
+      contributed_by: 'Sam Mason <samjbmason>',
     },
   ];
 

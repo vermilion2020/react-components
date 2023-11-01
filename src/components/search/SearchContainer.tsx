@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
-import { IAPIResponse, IItem } from '../../model/response.interface';
-import axios, { SEARCH_URI } from '../../axios-config';
+import { AxiosError } from 'axios';
+import { IItem } from '../../model/response.interface';
+import axios, { DEFAULT_PER_PAGE, SEARCH_URI } from '../../axios-config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
 import { useParams } from 'react-router-dom';
@@ -28,17 +28,13 @@ function SearchContainer() {
   const fetchItems = async (searchTerm: string, page: number) => {
     await axios
       .get(SEARCH_URI, {
-        params: { page, name: searchTerm },
+        params: { page, beer_name: searchTerm, per_page: DEFAULT_PER_PAGE },
       })
       .then((result) => {
-        const data = (result as AxiosResponse).data as IAPIResponse;
-        if ('error' in data) {
-          setItems([] as IItem[]);
-          setPagesCount(0);
-        } else {
-          setItems(data.results);
-          setPagesCount(data.info.pages);
-        }
+        const data = result.data as IItem[];
+        setItems(data);
+        setPagesCount(data.length);
+        setError('');
       })
       .catch(function (e) {
         const err = e as AxiosError;
