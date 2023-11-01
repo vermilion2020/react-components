@@ -1,6 +1,7 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Item from './Item';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Item tests', () => {
   const item = {
@@ -33,20 +34,14 @@ describe('Item tests', () => {
   };
 
   it('Renders Item with image', () => {
-    render(<Item item={item} imagesTurnedOn={true} />);
+    render(
+      <MemoryRouter>
+        <Item item={item} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText(item.name)).toBeVisible();
     expect(screen.getByText(item.tagline)).toBeVisible();
     expect(screen.getByRole('img')).toBeVisible();
-  });
-
-  it('Renders Item without image', () => {
-    // Arrange
-    render(<Item item={item} imagesTurnedOn={false} />);
-
-    // Expect
-    expect(screen.getByText(item.name)).toBeVisible();
-    expect(screen.getByText(item.tagline)).toBeVisible();
-    expect(() => screen.getByRole('img')).toThrow();
   });
 });

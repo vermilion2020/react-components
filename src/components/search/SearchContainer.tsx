@@ -1,34 +1,56 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import {
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { AxiosError } from 'axios';
 import { IItem } from '../../model/response.interface';
-import axios, { DEFAULT_PER_PAGE, SEARCH_URI } from '../../axios-config';
+import axios, {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+  SEARCH_URI,
+} from '../../axios-config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
-import { useParams } from 'react-router-dom';
 import Paging from './Paging';
+import { SearchContext } from '../../context/SearchContext';
+import { useParams } from 'react-router-dom';
+
+interface ISearchParams {
+  page: number;
+  per_page: number;
+  beer_name?: string;
+}
 
 function SearchContainer() {
-  const defaultSearchTerm = (localStorage.getItem('searchTerm') ?? '').trim();
   const [error, setError] = useState('');
-  const [lastSearchTerm, setLastSearchTerm] = useState(defaultSearchTerm);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([] as IItem[]);
   const searchInput = useRef() as MutableRefObject<HTMLInputElement>;
-  const { page: currentPage } = useParams();
+  const { setCurrentPage, currentPage, lastSearchTerm, setLastSearchTerm } =
+    useContext(SearchContext);
+  const { page } = useParams();
   const [pagesCount, setPagesCount] = useState(0);
 
   useEffect(() => {
     if (error) {
       throw new Error(error);
     }
-    const page = currentPage ? +currentPage : 1;
-    getItems(defaultSearchTerm, page);
-  }, [defaultSearchTerm, error, currentPage]);
+    const currentPage = page ? +page : DEFAULT_PAGE_NUMBER;
+    setCurrentPage(currentPage);
+    getItems(lastSearchTerm, currentPage);
+  }, [lastSearchTerm, error, setCurrentPage, page]);
 
   const fetchItems = async (searchTerm: string, page: number) => {
+    const params: ISearchParams = { page, per_page: DEFAULT_PER_PAGE };
+    if (searchTerm.length) {
+      params['beer_name'] = searchTerm;
+    }
     await axios
       .get(SEARCH_URI, {
-        params: { page, beer_name: searchTerm, per_page: DEFAULT_PER_PAGE },
+        params,
       })
       .then((result) => {
         const data = result.data as IItem[];
@@ -61,7 +83,7 @@ function SearchContainer() {
   return (
     <div className="search-container">
       <section className="search-bar-section">
-        <SearchBar searchTerm={defaultSearchTerm} forwardRef={searchInput} />
+        <SearchBar searchTerm={lastSearchTerm} forwardRef={searchInput} />
         <button
           className="button"
           onClick={() => {

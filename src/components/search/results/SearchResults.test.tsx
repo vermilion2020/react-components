@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import SearchResults, { NO_ITEMS_MESSAGE } from './SearchResults';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Renders Search results section', () => {
   const items = [
@@ -34,19 +35,31 @@ describe('Renders Search results section', () => {
   ];
 
   it('Search results list is displayed', () => {
-    render(<SearchResults items={items} isLoading={false} />);
+    render(
+      <MemoryRouter>
+        <SearchResults items={items} isLoading={false} />
+      </MemoryRouter>
+    );
     const itemCards = screen.getAllByTestId('card-item');
     expect(itemCards.length).toEqual(items.length);
   });
 
   it('No items message is shown when search results are empty', () => {
-    render(<SearchResults items={[]} isLoading={false} />);
+    render(
+      <MemoryRouter>
+        <SearchResults items={[]} isLoading={false} />
+      </MemoryRouter>
+    );
     const message = screen.getByText(NO_ITEMS_MESSAGE);
     expect(message).toBeVisible();
   });
 
   it('Preloader is shown when data is loading', () => {
-    render(<SearchResults items={[]} isLoading={true} />);
+    render(
+      <MemoryRouter>
+        <SearchResults items={[]} isLoading={true} />
+      </MemoryRouter>
+    );
     const preloader = screen.getByTestId('preloader');
     expect(preloader).toBeVisible();
   });

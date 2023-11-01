@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 interface IPagingProps {
   pagesCount: number;
-  currentPage?: string;
+  currentPage: number;
 }
 
 function Paging({ pagesCount, currentPage }: IPagingProps) {

@@ -1,18 +1,23 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/Home';
 import NotFoundPage from './pages/NotFound';
-import Layout from './components/layout/Layout';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import ItemPage from './pages/ItemPage';
+import { SearchState } from './context/SearchContext';
 
 function App() {
   return (
     <div className="app-container">
+      <Header />
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/search/:page" element={<HomePage />} />
-          <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/search/:page" element={<HomePage />}>
+          <Route path="id/:id" element={<ItemPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
@@ -20,7 +25,9 @@ function App() {
 function WrappedApp() {
   return (
     <BrowserRouter>
-      <App />
+      <SearchState>
+        <App />
+      </SearchState>
     </BrowserRouter>
   );
 }

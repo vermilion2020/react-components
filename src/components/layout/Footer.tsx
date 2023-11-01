@@ -15,12 +15,12 @@ function Footer() {
         </p>
         <p className="copyright">
           <a
-            href="https://rickandmortyapi.com/"
+            href="https://punkapi.com/"
             className="github"
             target="_blank"
             rel="noreferrer"
           >
-            R & M API
+            PUNK API
           </a>{' '}
         </p>
         <a

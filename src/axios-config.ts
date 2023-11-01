@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 export const SEARCH_URI = 'beers/';
-export const DEFAULT_PAGE_NUMBER = 0;
+export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_PER_PAGE = 20;
 const THROTTLING = 300;
 

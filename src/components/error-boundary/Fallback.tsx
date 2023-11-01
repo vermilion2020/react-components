@@ -1,9 +1,11 @@
+import fallbackImg from '../../assets/fallback.jpg';
+
 function Fallback() {
   return (
     <div className="fallback-container">
       <img
         className="fallback--img"
-        src="./fallback.jpg"
+        src={fallbackImg}
         alt="Something went wrong"
       />
       <p>Oops, an error occur...</p>
@@ -11,10 +13,10 @@ function Fallback() {
       <button
         className="button"
         onClick={() => {
-          window.location.reload();
+          window.location.href = '/';
         }}
       >
-        Reload
+        Open Home page
       </button>
     </div>
   );
