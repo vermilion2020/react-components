@@ -7,11 +7,13 @@ interface ISearchContext {
   itemsPerPage: number;
   currentItemId: number;
   lastSearchTerm: string;
+  opened: boolean;
   setCurrentPage: (currentPage: number) => void;
   setCountPages: (countPages: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
   setLastSearchTerm: (lastSearchTerm: string) => void;
   setCurrentItemId: (currentItemId: number) => void;
+  setOpened: (opened: boolean) => void;
 }
 
 export const SearchContext = createContext<ISearchContext>({
@@ -20,6 +22,7 @@ export const SearchContext = createContext<ISearchContext>({
   itemsPerPage: DEFAULT_PER_PAGE,
   lastSearchTerm: '',
   currentItemId: 0,
+  opened: false,
   setCurrentPage: () => {
     /**/
   },
@@ -35,15 +38,20 @@ export const SearchContext = createContext<ISearchContext>({
   setCurrentItemId: () => {
     /**/
   },
+  setOpened: () => {
+    /**/
+  },
 });
 
 export const SearchState = ({ children }: { children: React.ReactNode }) => {
   const defaultSearchTerm = localStorage.getItem('searchTerm') ?? '';
+  const defaultPerPage = +(localStorage.getItem('perPage') ?? DEFAULT_PER_PAGE);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
   const [countPages, setCountPages] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_PER_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState(defaultPerPage);
   const [currentItemId, setCurrentItemId] = useState(0);
   const [lastSearchTerm, setLastSearchTerm] = useState(defaultSearchTerm);
+  const [opened, setOpened] = useState(false);
 
   return (
     <SearchContext.Provider
@@ -58,6 +66,8 @@ export const SearchState = ({ children }: { children: React.ReactNode }) => {
         setCurrentItemId,
         lastSearchTerm,
         setLastSearchTerm,
+        opened,
+        setOpened,
       }}
     >
       {children}

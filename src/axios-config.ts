@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 export const SEARCH_URI = 'beers/';
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_PER_PAGE = 20;
+export const PER_PAGE_OPTIONS = [20, 40, 60, 80];
 const THROTTLING = 300;
 
 const sleep = (delay: number) => {
