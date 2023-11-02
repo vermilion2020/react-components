@@ -47,7 +47,7 @@ function ItemProfile() {
   return (
     <>
       {loading && <Preloader />}
-      {!loading && item && <ItemBody item={item} />}
+      {!loading && <ItemBody item={item} />}
     </>
   );
 }

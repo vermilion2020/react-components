@@ -51,6 +51,7 @@ body {
   display: flex;
   place-items: center;
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar {
@@ -80,6 +81,15 @@ body::-webkit-scrollbar-thumb {
   min-height: calc(100vh - 186px);
   text-align: center;
   box-sizing: border-box;
+}
+
+.cross-icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-start;
+  justify-self: end;
 }
 
 @media screen and (max-width: 1200px) {

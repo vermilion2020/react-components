@@ -1,26 +1,39 @@
-import { Link } from 'react-router-dom';
 import { IItem } from '../../../model/response.interface';
 import noImg from '../../../assets/no-img.jpg';
 import { useContext } from 'react';
 import { SearchContext } from '../../../context/SearchContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ICardProps {
   item: IItem;
 }
 
 function Item({ item }: ICardProps) {
-  const { currentPage } = useContext(SearchContext);
+  const { currentPage, setCurrentItemId, currentItemId } =
+    useContext(SearchContext);
+  const navigate = useNavigate();
+  const openCard = (itemId: number) => {
+    if (!currentItemId) {
+      setCurrentItemId(itemId);
+      navigate(`/search/${currentPage}/id/${itemId}`);
+      scrollTo({ top: 0 });
+    } else {
+      setCurrentItemId(0);
+      navigate(`/search/${currentPage}`);
+    }
+  };
 
   return (
-    <Link
+    <div
       className="card-item"
       data-testid="card-item"
-      to={`/search/${currentPage}/id/${item.id}`}
+      onClick={() => openCard(item.id)}
     >
       <img
         className="card-item--image"
         src={item.image_url || noImg}
         alt={item.name}
+        loading="lazy"
       />
       <div className="card-item--description">
         <div className="info-line" title={item.name}>
@@ -30,7 +43,7 @@ function Item({ item }: ICardProps) {
           {item.tagline}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

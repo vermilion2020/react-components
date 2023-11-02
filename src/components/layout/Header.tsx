@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="app-header">
       <h1>
-        <Link to="/">React Components</Link>
+        <Link to="/">React. Routing</Link>
       </h1>
     </header>
   );

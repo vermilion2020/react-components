@@ -14,7 +14,7 @@ import axios, {
 } from '../../axios-config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
-import Paging from './Paging';
+import Paging from './paging/Paging';
 import { SearchContext } from '../../context/SearchContext';
 import { useParams } from 'react-router-dom';
 

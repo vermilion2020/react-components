@@ -2,7 +2,7 @@ import NotFound from '../components/not-found/NotFound';
 
 function NotFoundPage() {
   return (
-    <div className="content not-found">
+    <div className="content">
       <NotFound />
     </div>
   );
