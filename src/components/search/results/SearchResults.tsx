@@ -4,8 +4,9 @@ import Item from './Item';
 import { Outlet } from 'react-router-dom';
 import { useContext } from 'react';
 import { SearchContext } from '../../../context/SearchContext';
-
-export const NO_ITEMS_MESSAGE = 'No items found for the current search term';
+import { useNavigate } from 'react-router-dom';
+import ItemsStatMessage from './ItemsStatMessage';
+import { NO_ITEMS_MESSAGE } from '../../../config';
 
 interface ISearchResultsProps {
   isLoading: boolean;
@@ -13,14 +14,38 @@ interface ISearchResultsProps {
 }
 
 function SearchResults({ isLoading, items }: ISearchResultsProps) {
-  const { setOpened } = useContext(SearchContext);
+  const {
+    setOpened,
+    currentItemId,
+    currentPage,
+    setCurrentItemId,
+    itemsPerPage,
+    countItems,
+    lastSearchTerm,
+  } = useContext(SearchContext);
+  const navigate = useNavigate();
+  const setDefault = () => {
+    setOpened(false);
+    if (currentItemId) {
+      setCurrentItemId(0);
+      navigate(`/search/${currentPage}`);
+    }
+  };
 
   return (
     <section className="search-results-section">
-      <div className="card-items" onClick={() => setOpened(false)}>
+      <div className="card-items" onClick={setDefault}>
         {isLoading && <Preloader />}
         {!isLoading && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
+        )}
+        {!isLoading && !currentItemId && (
+          <ItemsStatMessage
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            countItems={countItems}
+            searchTerm={lastSearchTerm}
+          />
         )}
         {!isLoading &&
           items.length !== 0 &&

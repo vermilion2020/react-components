@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../axios-config';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../config';
 
 interface ISearchContext {
   currentPage: number;

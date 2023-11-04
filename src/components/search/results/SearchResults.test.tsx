@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import SearchResults, { NO_ITEMS_MESSAGE } from './SearchResults';
+import SearchResults from './SearchResults';
 import { MemoryRouter } from 'react-router-dom';
+import { NO_ITEMS_MESSAGE } from '../../../config';
 
 describe('Renders Search results section', () => {
   const items = [

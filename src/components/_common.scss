@@ -44,6 +44,12 @@ a {
   &:hover {
     background-color: $hoverLinkColor;
   }
+
+  &.disabled,
+  &.disabled:hover {
+    background-color: $lightGreyFontColor;
+    cursor: default;
+  }
 }
 
 body {

@@ -4,30 +4,36 @@ import { SearchContext } from '../../../context/SearchContext';
 
 interface IPagingProps {
   pagesCount: number;
+  loading: boolean;
 }
 
-function Paging({ pagesCount }: IPagingProps) {
+function Paging({ pagesCount, loading }: IPagingProps) {
   const { currentPage, setOpened } = useContext(SearchContext);
   const current =
     currentPage && +currentPage <= pagesCount
       ? +currentPage
       : currentPage && +currentPage > pagesCount
-      ? pagesCount
+      ? currentPage
       : 1;
   let pages = [] as number[];
   let first = 1;
-  if (pagesCount <= 5 || current - 2 < 1) {
+  if (current > pagesCount && pagesCount > 5) {
+    first = pagesCount - 4;
+  } else if (pagesCount <= 5 || current - 2 < 1) {
     first = 1;
   } else if (current + 2 > pagesCount) {
     first = pagesCount - 4;
   } else {
     first = current - 2;
   }
-
   const shownPagesNumber = pagesCount > 5 ? 5 : pagesCount;
+
   pages = new Array(shownPagesNumber).fill(1).map((_, index) => index + first);
   return (
-    <div className="paging-container" onClick={() => setOpened(false)}>
+    <div
+      className={loading ? `paging-container disabled` : `paging-container`}
+      onClick={() => setOpened(false)}
+    >
       <Link
         to={`/search/1`}
         className={current > 1 ? `paging-button` : `paging-button disabled`}

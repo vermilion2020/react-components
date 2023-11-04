@@ -9,10 +9,6 @@
   line-height: 2em;
   margin: 0 0.1rem;
   cursor: pointer;
-  
-  &.active {
-    background-color: $activeLinkColor;
-  }
 
   &:hover {
     color: $whiteBgFontColor;
@@ -22,12 +18,25 @@
     transition: all 0.5s ease;
   }
 
+  &.active,
+  &.active:hover {
+    cursor: default;
+    background-color: $activeLinkColor;
+  }
+
   &.disabled,
   .disabled:hover {
     color: $whiteBgFontColor;
     background-color: $lightGreyFontColor;
     cursor: default;
   }
+}
+
+.disabled .paging-button,
+.disabled .paging-button:hover {
+  color: $whiteBgFontColor;
+  background-color: $lightGreyFontColor;
+  cursor: default;
 }
 
 .per-page--container {

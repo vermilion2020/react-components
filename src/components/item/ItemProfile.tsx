@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios, { SEARCH_URI } from '../../axios-config';
+import axios, { SEARCH_URI } from '../../config';
 import { IItem } from '../../model/response.interface';
 import { AxiosError } from 'axios';
 import ItemBody from './ItemBody';
