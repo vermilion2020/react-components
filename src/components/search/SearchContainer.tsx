@@ -17,7 +17,7 @@ import PerPage from './paging/PerPage';
 
 interface ISearchParams {
   page: number;
-  per_page: number;
+  per_page?: number;
   beer_name?: string;
 }
 
@@ -28,10 +28,10 @@ function SearchContainer() {
   const searchInput = useRef() as MutableRefObject<HTMLInputElement>;
   const {
     setCurrentPage,
-    currentPage,
     lastSearchTerm,
     setLastSearchTerm,
     itemsPerPage,
+    setCountItems,
   } = useContext(SearchContext);
   const { page } = useParams();
   const [pagesCount, setPagesCount] = useState(0);
@@ -40,7 +40,8 @@ function SearchContainer() {
     if (error) {
       throw new Error(error);
     }
-    const currentPage = page ? +page : DEFAULT_PAGE_NUMBER;
+    getCountItems(lastSearchTerm, 1, 0);
+    const currentPage = page && +page > 1 ? +page : DEFAULT_PAGE_NUMBER;
     setCurrentPage(currentPage);
     getItems(lastSearchTerm, currentPage, itemsPerPage);
   }, [lastSearchTerm, error, setCurrentPage, page, itemsPerPage]);
@@ -61,7 +62,6 @@ function SearchContainer() {
       .then((result) => {
         const data = result.data as IItem[];
         setItems(data);
-        setPagesCount(data.length);
         setError('');
       })
       .catch(function (e) {
@@ -79,6 +79,30 @@ function SearchContainer() {
     setLoading(true);
     await fetchItems(searchTerm, page, itemsPerPage);
     setLoading(false);
+  }
+
+  async function getCountItems(
+    searchTerm: string,
+    page = 1,
+    previousCount = 0
+  ): Promise<void> {
+    const params: ISearchParams = { page, per_page: 80 };
+    if (searchTerm) {
+      params['beer_name'] = searchTerm;
+    }
+    params['page'] = page;
+    const newResponse = await axios.get(SEARCH_URI, {
+      params,
+    });
+    const response = newResponse.data;
+    const newCount = previousCount + response.length;
+    if (response.length !== 0) {
+      page++;
+      return await getCountItems(searchTerm, page, newCount);
+    }
+
+    setCountItems(newCount);
+    setPagesCount(Math.floor(newCount / itemsPerPage));
   }
 
   const handleSearchClick = async () => {
@@ -110,7 +134,7 @@ function SearchContainer() {
         >
           Get an Error
         </button>
-        <Paging currentPage={currentPage} pagesCount={pagesCount} />
+        {!!pagesCount && <Paging pagesCount={pagesCount} />}
         <PerPage />
       </section>
       <SearchResults isLoading={loading} items={items} />

@@ -3,7 +3,7 @@ interface ISearchBarProps {
   searchTerm: string;
 }
 
-export const PLACEHOLDER_TEXT = 'Search for a character';
+export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar({ searchTerm, forwardRef }: ISearchBarProps) {
   return (

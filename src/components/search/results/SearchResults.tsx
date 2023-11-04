@@ -17,12 +17,7 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
 
   return (
     <section className="search-results-section">
-      <div
-        className="card-items"
-        onClick={() => {
-          setOpened(false);
-        }}
-      >
+      <div className="card-items" onClick={() => setOpened(false)}>
         {isLoading && <Preloader />}
         {!isLoading && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>

@@ -1,11 +1,33 @@
-.per-page--current {
-  background-color: $activeLinkColor;
+.per-page--current,
+.paging-button {
+  background-color: $baseLinkColor;
   width: 2rem;
   height: 2rem;
   border-radius: 0.5rem;
   color: $whiteBgFontColor;
   display: inline-block;
   line-height: 2em;
+  margin: 0 0.1rem;
+  cursor: pointer;
+  
+  &.active {
+    background-color: $activeLinkColor;
+  }
+
+  &:hover {
+    color: $whiteBgFontColor;
+    background-color: $hoverLinkColor;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  &.disabled,
+  .disabled:hover {
+    color: $whiteBgFontColor;
+    background-color: $lightGreyFontColor;
+    cursor: default;
+  }
 }
 
 .per-page--container {
