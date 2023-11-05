@@ -2,7 +2,7 @@
   display: flex;
   height: 100%;
   flex-wrap: wrap;
-  gap: 1rem 1.2rem;
+  gap: 1rem 0.3rem;
   justify-content: space-around;
   min-width: 46%;
 }
@@ -58,7 +58,7 @@
   }
 
   .card-item {
-    width: 46vw;
+    width: 45vw;
     height: auto;
     justify-content: flex-start;
   }

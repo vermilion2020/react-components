@@ -1,7 +1,7 @@
 import Preloader from '../Preloader';
 import { IItem } from '../../../model/response.interface';
 import Item from './Item';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { SearchContext } from '../../../context/SearchContext';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +24,8 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
     lastSearchTerm,
   } = useContext(SearchContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const setDefault = () => {
     setOpened(false);
     if (currentItemId) {
@@ -39,7 +41,7 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
         {!isLoading && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
         )}
-        {!isLoading && !currentItemId && (
+        {!isLoading && !searchParams.get('details') && (
           <ItemsStatMessage
             currentPage={currentPage}
             itemsPerPage={itemsPerPage}
@@ -51,7 +53,7 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
           items.length !== 0 &&
           items.map((item: IItem) => <Item item={item} key={item.id} />)}
       </section>
-      <Outlet />
+      {!!searchParams.get('details') && <Outlet />}
     </section>
   );
 }

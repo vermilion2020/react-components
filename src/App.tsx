@@ -11,11 +11,9 @@ function App() {
     <div className="app-container">
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />}>
-          <Route path="id/:id" element={<ItemPage />} />
-        </Route>
+        <Route path="/" element={<HomePage />} />
         <Route path="/search/:page" element={<HomePage />}>
-          <Route path="id/:id" element={<ItemPage />} />
+          <Route path="" element={<ItemPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

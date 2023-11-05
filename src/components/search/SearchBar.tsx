@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar() {
-  const { lastSearchTerm, setLastSearchTerm, setOpened } =
+  const { lastSearchTerm, setLastSearchTerm, setOpened, setCurrentItemId } =
     useContext(SearchContext);
   const [searchTerm, setSearchTerm] = useState(lastSearchTerm);
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ function SearchBar() {
     if (lastSearchTerm !== searchTerm) {
       window.localStorage.setItem('searchTerm', `${searchTerm}`);
       setLastSearchTerm(searchTerm);
+      setCurrentItemId(0);
       setOpened(false);
       navigate(`/search/1`);
     }

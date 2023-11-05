@@ -15,7 +15,7 @@ function Item({ item }: ICardProps) {
   const openCard = (itemId: number) => {
     if (!currentItemId) {
       setCurrentItemId(itemId);
-      navigate(`/search/${currentPage}/id/${itemId}`);
+      navigate(`/search/${currentPage}?details=1`);
       scrollTo({ top: 0 });
     } else {
       setCurrentItemId(0);

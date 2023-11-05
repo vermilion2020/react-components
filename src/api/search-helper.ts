@@ -30,6 +30,20 @@ export const fetchItems = async (
   return { data, err };
 };
 
+export const fetchItem = async (
+  itemId: number
+): Promise<{ data: IItem; err: string }> => {
+  let data = {} as IItem;
+  let err = '';
+  try {
+    const result = await axios.get(`${SEARCH_URI}${itemId}`);
+    data = result.data[0] as IItem;
+  } catch (e) {
+    err = (e as AxiosError).message;
+  }
+  return { data, err };
+};
+
 export async function fetchCountItems(
   searchTerm: string,
   page = 1,

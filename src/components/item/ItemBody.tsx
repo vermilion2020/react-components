@@ -32,6 +32,10 @@ function ItemBody({ item }: IItemProfileProps) {
           <div className="item-profile--description">
             <h2 className="heading">{item.name}</h2>
             <div className="text">
+              <span className="sup-info">Tagline: </span>
+              {item.tagline}
+            </div>
+            <div className="text">
               <span className="sup-info">Descrition: </span>
               {item.description}
             </div>
@@ -51,7 +55,11 @@ function ItemBody({ item }: IItemProfileProps) {
             )}
             <div className="text">
               <span className="sup-info">Food pairing: </span>
-              {item.food_pairing[0]}
+              <ul className="food-pairs">
+                {item.food_pairing.map((food, index) => (
+                  <li key={index}>{food}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
