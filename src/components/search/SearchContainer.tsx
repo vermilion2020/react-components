@@ -50,17 +50,19 @@ function SearchContainer() {
   return (
     <div className="search-container">
       <section className="search-bar-section">
-        <SearchBar />
-        <button
-          className="button"
-          onClick={() => {
-            setError('Error!!!');
-          }}
-        >
-          Get an Error
-        </button>
-        {!!pagesCount && <Paging loading={loading} pagesCount={pagesCount} />}
-        <PerPage />
+        <div className="search-form">
+          <SearchBar />
+          <button
+            className="button"
+            onClick={() => {
+              setError('Error!!!');
+            }}
+          >
+            Get an Error
+          </button>
+          {!!pagesCount && <Paging loading={loading} pagesCount={pagesCount} />}
+          <PerPage />
+        </div>
       </section>
       <SearchResults isLoading={loading} items={items} />
     </div>

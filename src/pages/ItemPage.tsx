@@ -2,9 +2,9 @@ import ItemProfile from '../components/item/ItemProfile';
 
 function ItemPage() {
   return (
-    <div className="item-profile">
+    <section className="item-profile-section">
       <ItemProfile />
-    </div>
+    </section>
   );
 }
 

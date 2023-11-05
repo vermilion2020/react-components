@@ -22,7 +22,7 @@ function ItemBody({ item }: IItemProfileProps) {
       <CrossIcon clickHandler={closeCard} />
       {!item && <NotFound />}
       {item && (
-        <>
+        <div className="item-profile">
           <img
             src={item.image_url}
             alt={item.name}
@@ -54,7 +54,7 @@ function ItemBody({ item }: IItemProfileProps) {
               {item.food_pairing[0]}
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );

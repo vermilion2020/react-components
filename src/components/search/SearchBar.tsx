@@ -18,13 +18,22 @@ function SearchBar() {
       navigate(`/search/1`);
     }
   };
+
+  const handleSubmit = async (e: React.KeyboardEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearchClick();
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.trim();
     setSearchTerm(term);
   };
 
   return (
-    <>
+    <form
+      className="search-form"
+      onSubmit={(e: React.KeyboardEvent<HTMLFormElement>) => handleSubmit(e)}
+    >
       <div className="search">
         <input
           data-testid="search-input"
@@ -38,12 +47,13 @@ function SearchBar() {
         />
       </div>
       <button
+        type="button"
         className={searchTerm === lastSearchTerm ? `button disabled` : `button`}
         onClick={() => handleSearchClick()}
       >
         Search
       </button>
-    </>
+    </form>
   );
 }
 

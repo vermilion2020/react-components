@@ -1,5 +1,5 @@
 h1 {
-  font-size: 1.2em;
+  font-size: 1.8em;
   line-height: 1.1;
 }
 
@@ -90,12 +90,22 @@ body::-webkit-scrollbar-thumb {
 }
 
 .cross-icon {
-  width: 25px;
-  height: 25px;
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.7;
+  color: $mainBgFontColor;
   cursor: pointer;
   display: flex;
-  align-self: flex-start;
-  justify-self: end;
+  align-self: end;
+
+  h2 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -105,7 +115,11 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
   .search-bar-section {
     flex-wrap: wrap;
   }

@@ -6,7 +6,7 @@
   align-items: center;
   gap: 3rem;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 1rem;
   color: $whiteBgFontColor;
 }
 
@@ -18,9 +18,9 @@
 }
 
 .rsschool {
-  margin-left: 20px;
-  height: 55px;
-  width: 110px;
+  margin-left: 1.5rem;
+  height: 3rem;
+  width: 6rem;
 }
 
 .rsschool:hover path {
@@ -28,13 +28,13 @@
 }
 
 .copyright {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .copyright a {
   text-decoration: none;
-  font-size: 18px;
+  font-size: 0.9rem;
 }
 
 .copyright a:hover {

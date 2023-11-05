@@ -34,7 +34,7 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
 
   return (
     <section className="search-results-section">
-      <div className="card-items" onClick={setDefault}>
+      <section className="card-items" onClick={setDefault}>
         {isLoading && <Preloader />}
         {!isLoading && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
@@ -50,7 +50,7 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
         {!isLoading &&
           items.length !== 0 &&
           items.map((item: IItem) => <Item item={item} key={item.id} />)}
-      </div>
+      </section>
       <Outlet />
     </section>
   );
