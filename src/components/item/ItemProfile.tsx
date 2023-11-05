@@ -19,8 +19,9 @@ function ItemProfile() {
     }
     if (currentItemId === 0) {
       navigate('/search/1');
+    } else {
+      getItem(currentItemId);
     }
-    getItem(currentItemId);
   }, [error, currentItemId]);
 
   async function getItem(itemId: number) {

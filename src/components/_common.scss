@@ -81,10 +81,12 @@ body::-webkit-scrollbar-thumb {
 .app-container {
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-  min-height: calc(100vh - 186px);
+  flex-grow: 1;
   text-align: center;
   box-sizing: border-box;
 }
