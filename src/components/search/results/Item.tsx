@@ -1,25 +1,18 @@
 import { IItem } from '../../../model/response.interface';
 import noImg from '../../../assets/no-img.jpg';
-import { useContext } from 'react';
-import { SearchContext } from '../../../context/SearchContext';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardProps {
   item: IItem;
 }
 
 function Item({ item }: ICardProps) {
-  const { currentPage, setCurrentItemId, currentItemId } =
-    useContext(SearchContext);
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const openCard = (itemId: number) => {
-    if (!currentItemId) {
-      setCurrentItemId(itemId);
-      navigate(`/search/${currentPage}?details=1`);
+    if (!searchParams.get('details')) {
+      searchParams.set('details', `${itemId}`);
+      setSearchParams(searchParams);
       scrollTo({ top: 0 });
-    } else {
-      setCurrentItemId(0);
-      navigate(`/search/${currentPage}`);
     }
   };
 

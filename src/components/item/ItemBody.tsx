@@ -1,20 +1,18 @@
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { IItem } from '../../model/response.interface';
 import NotFound from '../not-found/NotFound';
 import CrossIcon from '../search/CrossIcon';
-import { useContext } from 'react';
-import { SearchContext } from '../../context/SearchContext';
 
 interface IItemProfileProps {
   item: IItem | null;
 }
 
 function ItemBody({ item }: IItemProfileProps) {
-  const { currentPage, setCurrentItemId } = useContext(SearchContext);
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams({});
+
   const closeCard = () => {
-    setCurrentItemId(0);
-    navigate(`/search/${currentPage}`);
+    searchParams.delete('details');
+    setSearchParams(searchParams);
   };
 
   return (

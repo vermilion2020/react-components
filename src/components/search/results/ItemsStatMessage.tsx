@@ -1,5 +1,5 @@
 interface IItemsStatMessage {
-  currentPage: number;
+  currentPage: string;
   itemsPerPage: number;
   countItems: number;
   searchTerm: string;

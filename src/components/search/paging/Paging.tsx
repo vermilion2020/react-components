@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../../context/SearchContext';
 
 interface IPagingProps {
@@ -8,13 +8,16 @@ interface IPagingProps {
 }
 
 function Paging({ pagesCount, loading }: IPagingProps) {
-  const { currentPage, setOpened } = useContext(SearchContext);
-  const current =
-    currentPage && +currentPage <= pagesCount
-      ? +currentPage
-      : currentPage && +currentPage > pagesCount
-      ? currentPage
-      : 1;
+  const { setOpened } = useContext(SearchContext);
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  const setCurrentPage = (page: number) => {
+    searchParams.set('page', `${page}`);
+    setSearchParams(searchParams);
+  };
+
+  const currentPage = searchParams.get('page');
+  const current = currentPage && +currentPage >= 0 ? +currentPage : 1;
   let pages = [] as number[];
   let first = 1;
   if (current > pagesCount && pagesCount > 5) {
@@ -34,31 +37,35 @@ function Paging({ pagesCount, loading }: IPagingProps) {
       className={loading ? `paging-container disabled` : `paging-container`}
       onClick={() => setOpened(false)}
     >
-      <Link
-        to={`/search/1`}
+      <button
+        onClick={() => setCurrentPage(1)}
         className={current > 1 ? `paging-button` : `paging-button disabled`}
       >
         {'<<'}
-      </Link>
+      </button>
       {pages.map((num) =>
         current === num ? (
           <span className="active paging-button" key={num}>
             {num}
           </span>
         ) : (
-          <Link key={num} className="paging-button" to={`/search/${num}`}>
+          <button
+            onClick={() => setCurrentPage(num)}
+            key={num}
+            className="paging-button"
+          >
             {num}
-          </Link>
+          </button>
         )
       )}
-      <Link
-        to={`/search/${pagesCount}`}
+      <button
+        onClick={() => setCurrentPage(pagesCount)}
         className={
           current < pagesCount ? `paging-button` : `paging-button disabled`
         }
       >
         {'>>'}
-      </Link>
+      </button>
     </div>
   );
 }

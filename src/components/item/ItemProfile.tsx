@@ -1,28 +1,28 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IItem } from '../../model/response.interface';
 import ItemBody from './ItemBody';
 import Preloader from '../search/Preloader';
-import { SearchContext } from '../../context/SearchContext';
 import { fetchItem } from '../../api/search-helper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function ItemProfile() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [item, setItem] = useState<null | IItem>(null);
-  const { currentItemId } = useContext(SearchContext);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
       throw new Error(error);
     }
-    if (currentItemId === 0) {
+    const currentItemId = +(searchParams.get('details') ?? '');
+    if (currentItemId <= 0) {
       navigate('/search/1');
     } else {
       getItem(currentItemId);
     }
-  }, [error, currentItemId]);
+  }, [error, searchParams]);
 
   async function getItem(itemId: number) {
     setLoading(true);

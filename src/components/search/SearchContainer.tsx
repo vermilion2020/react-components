@@ -5,26 +5,27 @@ import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
 import Paging from './paging/Paging';
 import { SearchContext } from '../../context/SearchContext';
-import { useParams } from 'react-router-dom';
 import PerPage from './paging/PerPage';
 import { fetchCountItems, fetchItems } from '../../api/search-helper';
+import { useSearchParams } from 'react-router-dom';
 
 function SearchContainer() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([] as IItem[]);
-  const { setCurrentPage, lastSearchTerm, itemsPerPage, setCountItems } =
+  const { lastSearchTerm, itemsPerPage, setCountItems } =
     useContext(SearchContext);
-  const { page } = useParams();
+  const [searchParams] = useSearchParams({});
   const [pagesCount, setPagesCount] = useState(0);
 
   useEffect(() => {
     if (error) {
       throw new Error(error);
     }
-    const currentPage = page && +page > 1 ? +page : DEFAULT_PAGE_NUMBER;
+    const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
+    const currentPage = page > 0 ? page : DEFAULT_PAGE_NUMBER;
     getItems(lastSearchTerm, currentPage, itemsPerPage);
-  }, [lastSearchTerm, error, setCurrentPage, page, itemsPerPage]);
+  }, [lastSearchTerm, error, searchParams, itemsPerPage]);
 
   async function getItems(
     searchTerm: string,
@@ -36,7 +37,6 @@ function SearchContainer() {
     setItems(data);
     setError(err);
     await getCountItems(lastSearchTerm, 1);
-    setCurrentPage(page);
     setLoading(false);
   }
 
