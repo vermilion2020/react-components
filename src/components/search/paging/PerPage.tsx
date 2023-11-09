@@ -1,19 +1,19 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../../context/SearchContext';
-import { PER_PAGE_OPTIONS } from '../../../config';
+import { DEFAULT_PER_PAGE, PER_PAGE_OPTIONS } from '../../../config';
 
 function PerPage() {
-  const { setItemsPerPage, itemsPerPage, opened, setOpened } =
-    useContext(SearchContext);
-  const navigate = useNavigate();
+  const { opened, setOpened } = useContext(SearchContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClick = (num: number) => {
-    setItemsPerPage(num);
+    searchParams.set('per_page', `${num}`);
+    searchParams.delete('details');
+    setSearchParams(searchParams);
     setOpened(false);
-    localStorage.setItem('perPage', `${num}`);
-    navigate(`/search/1`);
   };
+  const itemsPerPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   return (
     <div className="per-page">
       <div className="per-page--current" onClick={() => setOpened(!opened)}>

@@ -13,12 +13,9 @@ function ItemProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (error) {
-      throw new Error(error);
-    }
     const currentItemId = +(searchParams.get('details') ?? '');
     if (currentItemId <= 0) {
-      navigate('/search/1');
+      navigate('/search/');
     } else {
       getItem(currentItemId);
     }

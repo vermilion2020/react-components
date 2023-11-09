@@ -1,6 +1,6 @@
 interface IItemsStatMessage {
   currentPage: string;
-  itemsPerPage: number;
+  itemsPerPage: string;
   countItems: number;
   searchTerm: string;
 }

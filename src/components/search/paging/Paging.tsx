@@ -1,17 +1,20 @@
 import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../../context/SearchContext';
+import { DEFAULT_PER_PAGE } from '../../../config';
 
 interface IPagingProps {
-  pagesCount: number;
   loading: boolean;
 }
 
-function Paging({ pagesCount, loading }: IPagingProps) {
-  const { setOpened } = useContext(SearchContext);
-  const [searchParams, setSearchParams] = useSearchParams({});
+function Paging({ loading }: IPagingProps) {
+  const { setOpened, countItems } = useContext(SearchContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
+  const pagesCount = Math.ceil(countItems / perPage);
 
   const setCurrentPage = (page: number) => {
+    searchParams.delete('details');
     searchParams.set('page', `${page}`);
     setSearchParams(searchParams);
   };
@@ -45,9 +48,9 @@ function Paging({ pagesCount, loading }: IPagingProps) {
       </button>
       {pages.map((num) =>
         current === num ? (
-          <span className="active paging-button" key={num}>
+          <button className="active paging-button" key={num}>
             {num}
-          </span>
+          </button>
         ) : (
           <button
             onClick={() => setCurrentPage(num)}

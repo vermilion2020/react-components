@@ -27,6 +27,7 @@ function Item({ item }: ICardProps) {
         src={item.image_url || noImg}
         alt={item.name}
         loading="lazy"
+        decoding="async"
       />
       <div className="card-item--description">
         <div className="info-line" title={item.name}>

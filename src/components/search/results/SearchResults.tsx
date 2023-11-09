@@ -1,22 +1,24 @@
 import Preloader from '../Preloader';
 import { IItem } from '../../../model/response.interface';
 import Item from './Item';
-import { Outlet, useParams, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { SearchContext } from '../../../context/SearchContext';
 import ItemsStatMessage from './ItemsStatMessage';
-import { NO_ITEMS_MESSAGE } from '../../../config';
+import {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+  NO_ITEMS_MESSAGE,
+} from '../../../config';
 
 interface ISearchResultsProps {
   isLoading: boolean;
-  items: IItem[];
 }
 
-function SearchResults({ isLoading, items }: ISearchResultsProps) {
-  const { setOpened, itemsPerPage, countItems, lastSearchTerm } =
+function SearchResults({ isLoading }: ISearchResultsProps) {
+  const { setOpened, countItems, lastSearchTerm, items } =
     useContext(SearchContext);
-  const [searchParams, setSearchParams] = useSearchParams({});
-  const { page: currentPage } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const setDefault = () => {
     setOpened(false);
@@ -35,8 +37,12 @@ function SearchResults({ isLoading, items }: ISearchResultsProps) {
         )}
         {!isLoading && !searchParams.get('details') && (
           <ItemsStatMessage
-            currentPage={currentPage ?? ''}
-            itemsPerPage={itemsPerPage}
+            currentPage={
+              searchParams.get('page') ?? DEFAULT_PAGE_NUMBER.toString()
+            }
+            itemsPerPage={
+              searchParams.get('per_page') ?? DEFAULT_PER_PAGE.toString()
+            }
             countItems={countItems}
             searchTerm={lastSearchTerm}
           />

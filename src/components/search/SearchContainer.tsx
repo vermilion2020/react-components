@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { IItem } from '../../model/response.interface';
-import { DEFAULT_PAGE_NUMBER } from '../../config';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../../config';
 import SearchBar from './SearchBar';
 import SearchResults from './results/SearchResults';
 import Paging from './paging/Paging';
@@ -12,20 +11,18 @@ import { useSearchParams } from 'react-router-dom';
 function SearchContainer() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [items, setItems] = useState([] as IItem[]);
-  const { lastSearchTerm, itemsPerPage, setCountItems } =
-    useContext(SearchContext);
+  const { lastSearchTerm, setCountItems, setItems } = useContext(SearchContext);
   const [searchParams] = useSearchParams({});
-  const [pagesCount, setPagesCount] = useState(0);
+  const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
+  const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
+  const currentPage = page > 0 ? page : DEFAULT_PAGE_NUMBER;
 
   useEffect(() => {
     if (error) {
       throw new Error(error);
     }
-    const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
-    const currentPage = page > 0 ? page : DEFAULT_PAGE_NUMBER;
-    getItems(lastSearchTerm, currentPage, itemsPerPage);
-  }, [lastSearchTerm, error, searchParams, itemsPerPage]);
+    getItems(lastSearchTerm, currentPage, perPage);
+  }, [lastSearchTerm, error, currentPage, perPage]);
 
   async function getItems(
     searchTerm: string,
@@ -36,7 +33,8 @@ function SearchContainer() {
     const { data, err } = await fetchItems(searchTerm, page, itemsPerPage);
     setItems(data);
     setError(err);
-    await getCountItems(lastSearchTerm, 1);
+    await getCountItems(searchTerm, 1);
+
     setLoading(false);
   }
 
@@ -44,7 +42,6 @@ function SearchContainer() {
     const newCountItems = await fetchCountItems(searchTerm, page, 0);
 
     setCountItems(newCountItems);
-    setPagesCount(Math.ceil(newCountItems / itemsPerPage));
   }
 
   return (
@@ -60,11 +57,11 @@ function SearchContainer() {
           >
             Get an Error
           </button>
-          {!!pagesCount && <Paging loading={loading} pagesCount={pagesCount} />}
+          <Paging loading={loading} />
           <PerPage />
         </div>
       </section>
-      <SearchResults isLoading={loading} items={items} />
+      <SearchResults isLoading={loading} />
     </div>
   );
 }
