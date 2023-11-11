@@ -1,26 +1,29 @@
 import { useSearchParams } from 'react-router-dom';
 import { IItem } from '../../model/response.interface';
 import NotFound from '../not-found/NotFound';
-import CrossIcon from '../search/CrossIcon';
+import Preloader from '../search/Preloader';
 
 interface IItemProfileProps {
   item: IItem | null;
+  loading: boolean;
 }
 
-function ItemBody({ item }: IItemProfileProps) {
+function DetailedCard({ item, loading }: IItemProfileProps) {
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const closeCard = () => {
     searchParams.delete('details');
     setSearchParams(searchParams);
   };
-
   return (
     <>
-      <CrossIcon clickHandler={closeCard} />
-      {!item && <NotFound />}
-      {item && (
-        <div className="item-profile">
+      <div className="cross-icon" data-testid="cross-icon" onClick={closeCard}>
+        <h3>&times;</h3>
+      </div>
+      {loading && <Preloader />}
+      {!loading && !item && <NotFound />}
+      {!loading && item && (
+        <div className="item-profile" data-testid="item-profile">
           <img
             src={item.image_url}
             alt={item.name}
@@ -66,4 +69,4 @@ function ItemBody({ item }: IItemProfileProps) {
   );
 }
 
-export default ItemBody;
+export default DetailedCard;

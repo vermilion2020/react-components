@@ -10,6 +10,6 @@ describe('App tests', () => {
       screen.getByRole('heading', {
         level: 1,
       })
-    ).toHaveTextContent('React. Routing');
+    ).toHaveTextContent('React. Tests/Context API');
   });
 });

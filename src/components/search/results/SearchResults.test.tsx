@@ -17,8 +17,6 @@ describe('Renders Search results section', () => {
     setCurrentSearchTerm: () => {},
   };
 
-  defaultContext.items = ITEMS;
-
   it('Search results list is displayed', () => {
     render(
       <MemoryRouter>

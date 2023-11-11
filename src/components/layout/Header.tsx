@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="app-header">
       <h1>
-        <Link to="/">React. Routing</Link>
+        <Link to="/">React. Tests/Context API</Link>
       </h1>
     </header>
   );

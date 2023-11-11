@@ -12,7 +12,6 @@ function Item({ item }: ICardProps) {
     if (!searchParams.get('details')) {
       searchParams.set('details', `${itemId}`);
       setSearchParams(searchParams);
-      scrollTo({ top: 0 });
     }
   };
 

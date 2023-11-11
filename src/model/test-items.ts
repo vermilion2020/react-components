@@ -24,7 +24,7 @@ export const ITEMS = [
       unit: 'litres',
     },
     food_pairing: ['Salt baked cod with lemon and dill butter'],
-    brewers_tips: '',
+    brewers_tips: 'Some tips',
     contributed_by: 'Sam Mason <samjbmason>',
   },
   {
@@ -52,7 +52,7 @@ export const ITEMS = [
       unit: 'litres',
     },
     food_pairing: ['Salt baked cod with lemon and dill butter'],
-    brewers_tips: '',
+    brewers_tips: 'Some tips',
     contributed_by: 'Sam Mason <samjbmason>',
   },
 ];

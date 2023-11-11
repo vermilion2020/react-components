@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { IItem } from '../../model/response.interface';
-import ItemBody from './ItemBody';
-import Preloader from '../search/Preloader';
+import DetailBody from './DetailedCard';
 import { fetchItem } from '../../api/search-helper';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-function ItemProfile() {
+function DetailedCard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [item, setItem] = useState<null | IItem>(null);
@@ -28,13 +27,11 @@ function ItemProfile() {
     setError(err);
     setLoading(false);
   }
-
   return (
     <>
-      {loading && <Preloader />}
-      {!loading && <ItemBody item={item} />}
+      <DetailBody loading={loading} item={item} />
     </>
   );
 }
 
-export default ItemProfile;
+export default DetailedCard;
