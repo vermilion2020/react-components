@@ -6,7 +6,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ITEMS } from '../../model/test-items';
 import HomePage from '../../pages/Home';
 import ItemPage from '../../pages/ItemPage';
-import { fetch_item_response, fetch_list_response } from '../../mock';
+import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../mock';
 
 describe('Detail tests', () => {
   const mswServer = setupServer();
@@ -42,8 +42,8 @@ describe('Detail tests', () => {
   });
 
   it('Clicking the close button hides the component', async () => {
-    mswServer.use(fetch_list_response);
-    mswServer.use(fetch_item_response);
+    mswServer.use(FETCH_LIST_RESPONSE);
+    mswServer.use(FETCH_ITEM_RESPONSE);
 
     render(
       <MemoryRouter initialEntries={['?details=63']}>

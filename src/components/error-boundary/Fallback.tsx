@@ -8,7 +8,7 @@ function Fallback() {
         src={fallbackImg}
         alt="Something went wrong"
       />
-      <p>Oops, an error occur...</p>
+      <h2>Oops, an error occur...</h2>
       <p>Run away from an error!</p>
       <button
         className="button"

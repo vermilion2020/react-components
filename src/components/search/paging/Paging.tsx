@@ -1,14 +1,12 @@
-import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SearchContext } from '../../../context/SearchContext';
 import { DEFAULT_PER_PAGE } from '../../../config';
 
 interface IPagingProps {
   loading: boolean;
+  countItems: number;
 }
 
-function Paging({ loading }: IPagingProps) {
-  const { countItems } = useContext(SearchContext);
+function Paging({ loading, countItems }: IPagingProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   const pagesCount = Math.ceil(countItems / perPage);
@@ -36,7 +34,10 @@ function Paging({ loading }: IPagingProps) {
 
   pages = new Array(shownPagesNumber).fill(1).map((_, index) => index + first);
   return (
-    <div className={loading ? `paging-container disabled` : `paging-container`}>
+    <div
+      className={loading ? `paging-container disabled` : `paging-container`}
+      data-testid="paging-container"
+    >
       <button
         onClick={() => setCurrentPage(1)}
         className={current > 1 ? `paging-button` : `paging-button disabled`}
@@ -45,7 +46,7 @@ function Paging({ loading }: IPagingProps) {
       </button>
       {pages.map((num) =>
         current === num ? (
-          <button className="active paging-button" key={num}>
+          <button className="active paging-button" name={`${num}`} key={num}>
             {num}
           </button>
         ) : (
@@ -53,6 +54,7 @@ function Paging({ loading }: IPagingProps) {
             onClick={() => setCurrentPage(num)}
             key={num}
             className="paging-button"
+            name={`${num}`}
           >
             {num}
           </button>

@@ -5,14 +5,14 @@ import SearchResults from './results/SearchResults';
 import Paging from './paging/Paging';
 import { SearchContext } from '../../context/SearchContext';
 import PerPage from './paging/PerPage';
-import { fetchCountItems, fetchItems } from '../../api/search-helper';
+import { fetchCountItems, fetchItems } from '../../helpers/search-helper';
 import { useSearchParams } from 'react-router-dom';
 
 function SearchContainer() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [prevSearchTerm, setPrevSearchTerm] = useState('');
-  const { currentSearchTerm, setCountItems, setItems } =
+  const { currentSearchTerm, setCountItems, setItems, countItems } =
     useContext(SearchContext);
   const [searchParams] = useSearchParams({});
   const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
@@ -57,10 +57,11 @@ function SearchContainer() {
             onClick={() => {
               setError('Error!!!');
             }}
+            data-testid="error-button"
           >
             Get an Error
           </button>
-          <Paging loading={loading} />
+          <Paging loading={loading} countItems={countItems} />
           <PerPage />
         </div>
       </section>
