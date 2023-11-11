@@ -1,14 +1,24 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+  PER_PAGE_OPTIONS,
+} from '../../../config';
 import { SearchContext } from '../../../context/SearchContext';
-import { DEFAULT_PER_PAGE, PER_PAGE_OPTIONS } from '../../../config';
 
 function PerPage() {
-  const { opened, setOpened } = useContext(SearchContext);
+  const [opened, setOpened] = useState(false);
+  const { currentSearchTerm } = useContext(SearchContext);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setOpened(false);
+  }, [searchParams, currentSearchTerm]);
 
   const handleClick = (num: number) => {
     searchParams.set('per_page', `${num}`);
+    searchParams.set('page', `${DEFAULT_PAGE_NUMBER}`);
     searchParams.delete('details');
     setSearchParams(searchParams);
     setOpened(false);

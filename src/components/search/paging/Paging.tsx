@@ -8,7 +8,7 @@ interface IPagingProps {
 }
 
 function Paging({ loading }: IPagingProps) {
-  const { setOpened, countItems } = useContext(SearchContext);
+  const { countItems } = useContext(SearchContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   const pagesCount = Math.ceil(countItems / perPage);
@@ -36,10 +36,7 @@ function Paging({ loading }: IPagingProps) {
 
   pages = new Array(shownPagesNumber).fill(1).map((_, index) => index + first);
   return (
-    <div
-      className={loading ? `paging-container disabled` : `paging-container`}
-      onClick={() => setOpened(false)}
-    >
+    <div className={loading ? `paging-container disabled` : `paging-container`}>
       <button
         onClick={() => setCurrentPage(1)}
         className={current > 1 ? `paging-button` : `paging-button disabled`}

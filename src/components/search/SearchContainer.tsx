@@ -11,7 +11,9 @@ import { useSearchParams } from 'react-router-dom';
 function SearchContainer() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { lastSearchTerm, setCountItems, setItems } = useContext(SearchContext);
+  const [prevSearchTerm, setPrevSearchTerm] = useState('');
+  const { currentSearchTerm, setCountItems, setItems } =
+    useContext(SearchContext);
   const [searchParams] = useSearchParams({});
   const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
   const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
@@ -21,8 +23,8 @@ function SearchContainer() {
     if (error) {
       throw new Error(error);
     }
-    getItems(lastSearchTerm, currentPage, perPage);
-  }, [lastSearchTerm, error, currentPage, perPage]);
+    getItems(currentSearchTerm, currentPage, perPage);
+  }, [currentSearchTerm, error, currentPage, perPage]);
 
   async function getItems(
     searchTerm: string,
@@ -31,16 +33,17 @@ function SearchContainer() {
   ) {
     setLoading(true);
     const { data, err } = await fetchItems(searchTerm, page, itemsPerPage);
+    if (currentSearchTerm !== prevSearchTerm) {
+      await getCountItems(currentSearchTerm, 1);
+      setPrevSearchTerm(currentSearchTerm);
+    }
     setItems(data);
     setError(err);
-    await getCountItems(searchTerm, 1);
-
     setLoading(false);
   }
 
   async function getCountItems(searchTerm: string, page = 1): Promise<void> {
     const newCountItems = await fetchCountItems(searchTerm, page, 0);
-
     setCountItems(newCountItems);
   }
 

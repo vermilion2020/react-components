@@ -1,29 +1,23 @@
 import { createContext, useState } from 'react';
 import { IItem } from '../model/response.interface';
 
-interface ISearchContext {
+export interface ISearchContext {
   countItems: number;
-  lastSearchTerm: string;
-  opened: boolean;
+  currentSearchTerm: string;
   items: IItem[];
   setCountItems: (countPages: number) => void;
-  setLastSearchTerm: (lastSearchTerm: string) => void;
-  setOpened: (opened: boolean) => void;
+  setCurrentSearchTerm: (currentSearchTerm: string) => void;
   setItems: (items: IItem[]) => void;
 }
 
 export const SearchContext = createContext<ISearchContext>({
   countItems: 0,
-  lastSearchTerm: '',
-  opened: false,
+  currentSearchTerm: '',
   items: [],
   setCountItems: () => {
     /**/
   },
-  setLastSearchTerm: () => {
-    /**/
-  },
-  setOpened: () => {
+  setCurrentSearchTerm: () => {
     /**/
   },
   setItems: () => {
@@ -34,8 +28,7 @@ export const SearchContext = createContext<ISearchContext>({
 export const SearchState = ({ children }: { children: React.ReactNode }) => {
   const defaultSearchTerm = localStorage.getItem('searchTerm') ?? '';
   const [countItems, setCountItems] = useState(0);
-  const [lastSearchTerm, setLastSearchTerm] = useState(defaultSearchTerm);
-  const [opened, setOpened] = useState(false);
+  const [currentSearchTerm, setCurrentSearchTerm] = useState(defaultSearchTerm);
   const [items, setItems] = useState([] as IItem[]);
 
   return (
@@ -43,10 +36,8 @@ export const SearchState = ({ children }: { children: React.ReactNode }) => {
       value={{
         countItems,
         setCountItems,
-        lastSearchTerm,
-        setLastSearchTerm,
-        opened,
-        setOpened,
+        currentSearchTerm,
+        setCurrentSearchTerm,
         items,
         setItems,
       }}

@@ -1,22 +1,21 @@
+import { useSearchParams } from 'react-router-dom';
+import { DEFAULT_PAGE_NUMBER } from '../../config';
 import { SearchContext } from '../../context/SearchContext';
 import { useContext, useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar() {
-  const { lastSearchTerm, setLastSearchTerm, setOpened, setCurrentItemId } =
-    useContext(SearchContext);
-  const [searchTerm, setSearchTerm] = useState(lastSearchTerm);
-  const navigate = useNavigate();
+  const { currentSearchTerm, setCurrentSearchTerm } = useContext(SearchContext);
+  const [searchTerm, setSearchTerm] = useState(currentSearchTerm);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearchClick = async () => {
-    if (lastSearchTerm !== searchTerm) {
+    if (currentSearchTerm !== searchTerm) {
       window.localStorage.setItem('searchTerm', `${searchTerm}`);
-      setLastSearchTerm(searchTerm);
-      setCurrentItemId(0);
-      setOpened(false);
-      navigate(`/search/1`);
+      setCurrentSearchTerm(searchTerm);
+      searchParams.set('page', `${DEFAULT_PAGE_NUMBER}`);
+      setSearchParams(searchParams);
     }
   };
 
@@ -49,7 +48,9 @@ function SearchBar() {
       </div>
       <button
         type="button"
-        className={searchTerm === lastSearchTerm ? `button disabled` : `button`}
+        className={
+          searchTerm === currentSearchTerm ? `button disabled` : `button`
+        }
         onClick={() => handleSearchClick()}
       >
         Search
