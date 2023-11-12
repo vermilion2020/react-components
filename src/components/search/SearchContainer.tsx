@@ -11,10 +11,10 @@ import { useSearchParams } from 'react-router-dom';
 function SearchContainer() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [prevSearchTerm, setPrevSearchTerm] = useState('');
+  const [prevSearchTerm, setPrevSearchTerm] = useState<null | string>(null);
   const { currentSearchTerm, setCountItems, setItems, countItems } =
     useContext(SearchContext);
-  const [searchParams] = useSearchParams({});
+  const [searchParams] = useSearchParams();
   const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
   const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   const currentPage = page > 0 ? page : DEFAULT_PAGE_NUMBER;
@@ -33,7 +33,7 @@ function SearchContainer() {
   ) {
     setLoading(true);
     const { data, err } = await fetchItems(searchTerm, page, itemsPerPage);
-    if (currentSearchTerm !== prevSearchTerm) {
+    if (currentSearchTerm !== prevSearchTerm || prevSearchTerm === null) {
       await getCountItems(currentSearchTerm, 1);
       setPrevSearchTerm(currentSearchTerm);
     }

@@ -27,6 +27,7 @@ function DetailedCard() {
     setError(err);
     setLoading(false);
   }
+
   return (
     <>
       <DetailBody loading={loading} item={item} />

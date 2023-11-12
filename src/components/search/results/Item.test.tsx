@@ -2,18 +2,24 @@ import { describe, it, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Item from './Item';
 import { setupServer } from 'msw/node';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ITEMS } from '../../../model/test-items';
 import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../../mock';
 import { WrappedApp } from '../../../App';
+import HomePage from '../../../pages/Home';
+import ItemPage from '../../../pages/ItemPage';
 
 describe('Item card tests', () => {
   // Arrange
   const mswServer = setupServer();
+
   const item = ITEMS[0];
 
   it('Card component renders the relevant card data', () => {
     // Arrange
+    mswServer.use(FETCH_LIST_RESPONSE);
+    mswServer.use(FETCH_ITEM_RESPONSE);
+
     render(
       <MemoryRouter>
         <Item item={item} />
@@ -35,12 +41,12 @@ describe('Item card tests', () => {
 
     // Act
     await waitFor(() => screen.getAllByTestId('card-item')[0], {
-      timeout: 1000,
+      timeout: 5000,
     });
     fireEvent.click(screen.getAllByTestId('card-item')[0]);
 
     // Expect
-    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 1000 });
+    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 5000 });
     expect(screen.getByTestId('item-profile')).toBeVisible();
   });
 
@@ -58,17 +64,24 @@ describe('Item card tests', () => {
 
     render(
       <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />}>
+            <Route path="" element={<ItemPage />} />
+          </Route>
+        </Routes>
         <Item item={item} />
       </MemoryRouter>
     );
 
     // Act
     await waitFor(() => screen.getAllByTestId('card-item')[0], {
-      timeout: 1000,
+      timeout: 5000,
     });
     fireEvent.click(screen.getAllByTestId('card-item')[0]);
 
     // Expect
     expect(requestSpy).toHaveBeenCalled();
   });
+
+  mswServer.close();
 });

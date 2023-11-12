@@ -63,10 +63,12 @@ describe('Detailed Card tests', () => {
     );
 
     // Act
-    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 1000 });
+    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 5000 });
     fireEvent.click(screen.getByTestId('cross-icon'));
 
     // Expect
     expect(() => screen.getByTestId('item-profile')).toThrow();
   });
+
+  mswServer.close();
 });

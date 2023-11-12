@@ -7,12 +7,6 @@ export const PER_PAGE_OPTIONS = [20, 40, 60, 80];
 export const NO_ITEMS_MESSAGE =
   'No items found for the current search term and paging settings';
 
-const sleep = (delay: number) => {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, delay);
-  });
-};
-
 axios.defaults.baseURL = 'https://api.punkapi.com/v2/';
 
 axios.interceptors.request.use(
@@ -26,10 +20,7 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  async (response) => {
-    await sleep(100);
-    return response;
-  },
+  async (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 404) {
       return error.response;

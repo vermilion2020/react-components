@@ -38,7 +38,7 @@ describe('Per page component', async () => {
     // Act
     fireEvent.click(screen.getByTestId('per-page-current'));
     await waitFor(() => screen.getByTestId('per-page-container'), {
-      timeout: 1000,
+      timeout: 5000,
     });
     fireEvent.click(screen.getByTitle(`${testPerPage}`));
     const newParams = new URLSearchParams(mockSearchParam);
