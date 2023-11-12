@@ -8,26 +8,32 @@ import HomePage from '../../pages/Home';
 import ItemPage from '../../pages/ItemPage';
 import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../mock';
 
-describe('Detail tests', () => {
+describe('Detailed Card tests', () => {
   const mswServer = setupServer();
 
-  const item = ITEMS[0];
   it('Preloader is displayed while fetching data', () => {
+    // Arrange
+    const item = ITEMS[0];
     render(
       <MemoryRouter>
         <DetailedCard loading={true} item={item} />
       </MemoryRouter>
     );
 
+    // Expect
     expect(screen.getByTestId('preloader')).toBeVisible();
   });
 
   it('Detailed card component correctly displays the detailed card data', () => {
+    // Arrange
+    const item = ITEMS[0];
     render(
       <MemoryRouter>
         <DetailedCard loading={false} item={item} />
       </MemoryRouter>
     );
+
+    // Expect
     expect(
       screen.getByRole('heading', {
         level: 2,
@@ -42,6 +48,7 @@ describe('Detail tests', () => {
   });
 
   it('Clicking the close button hides the component', async () => {
+    // Arrange
     mswServer.use(FETCH_LIST_RESPONSE);
     mswServer.use(FETCH_ITEM_RESPONSE);
 
@@ -54,9 +61,12 @@ describe('Detail tests', () => {
         </Routes>
       </MemoryRouter>
     );
-    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 3000 });
-    expect(screen.getByTestId('item-profile')).toBeVisible();
+
+    // Act
+    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 1000 });
     fireEvent.click(screen.getByTestId('cross-icon'));
+
+    // Expect
     expect(() => screen.getByTestId('item-profile')).toThrow();
   });
 });

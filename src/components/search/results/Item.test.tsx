@@ -1,47 +1,74 @@
-import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Item from './Item';
+import { setupServer } from 'msw/node';
 import { MemoryRouter } from 'react-router-dom';
+import { ITEMS } from '../../../model/test-items';
+import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../../mock';
+import { WrappedApp } from '../../../App';
 
-describe('Item tests', () => {
-  const item = {
-    id: 63,
-    name: 'Sunk Punk',
-    tagline: 'Ocean Fermented Lager.',
-    first_brewed: '09/2011',
-    description:
-      "It's rumoured just a drop can calm the fiercest of storms. A balance of sweet, salt and savoury, citrus, spruce and caramel. Fermented at the bottom of the North Sea, which just so happens to be the perfect temperature for lagers to ferment.",
-    image_url: 'https://images.punkapi.com/v2/63.png',
-    abv: 7.1,
-    ibu: 68,
-    target_fg: 1010,
-    target_og: 1056,
-    ebc: 14,
-    srm: 7,
-    ph: 4.4,
-    attenuation_level: 82.1,
-    volume: {
-      value: 20,
-      unit: 'litres',
-    },
-    boil_volume: {
-      value: 25,
-      unit: 'litres',
-    },
-    food_pairing: ['Salt baked cod with lemon and dill butter'],
-    brewers_tips: '',
-    contributed_by: 'Sam Mason <samjbmason>',
-  };
+describe('Item card tests', () => {
+  // Arrange
+  const mswServer = setupServer();
+  const item = ITEMS[0];
 
-  it('Renders Item with image', () => {
+  it('Card component renders the relevant card data', () => {
+    // Arrange
     render(
       <MemoryRouter>
         <Item item={item} />
       </MemoryRouter>
     );
 
+    // Expect
     expect(screen.getByText(item.name)).toBeVisible();
     expect(screen.getByText(item.tagline)).toBeVisible();
     expect(screen.getByRole('img')).toBeVisible();
+  });
+
+  it('Validate that clicking on a card opens a detailed card component', async () => {
+    // Arrange
+    mswServer.use(FETCH_LIST_RESPONSE);
+    mswServer.use(FETCH_ITEM_RESPONSE);
+
+    render(<WrappedApp />);
+
+    // Act
+    await waitFor(() => screen.getAllByTestId('card-item')[0], {
+      timeout: 1000,
+    });
+    fireEvent.click(screen.getAllByTestId('card-item')[0]);
+
+    // Expect
+    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 1000 });
+    expect(screen.getByTestId('item-profile')).toBeVisible();
+  });
+
+  it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
+    // Arrange
+    const { requestSpy } = vi.hoisted(() => {
+      return { requestSpy: vi.fn() };
+    });
+
+    vi.mock('../../../api/search-helper.ts', async () => {
+      const actual = await vi.importActual('../../../api/search-helper.ts');
+      requestSpy.call('1');
+      return actual;
+    });
+
+    render(
+      <MemoryRouter>
+        <Item item={item} />
+      </MemoryRouter>
+    );
+
+    // Act
+    await waitFor(() => screen.getAllByTestId('card-item')[0], {
+      timeout: 1000,
+    });
+    fireEvent.click(screen.getAllByTestId('card-item')[0]);
+
+    // Expect
+    expect(requestSpy).toHaveBeenCalled();
   });
 });

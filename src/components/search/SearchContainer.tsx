@@ -5,7 +5,7 @@ import SearchResults from './results/SearchResults';
 import Paging from './paging/Paging';
 import { SearchContext } from '../../context/SearchContext';
 import PerPage from './paging/PerPage';
-import { fetchCountItems, fetchItems } from '../../helpers/search-helper';
+import { fetchCountItems, fetchItems } from '../../api/search-helper';
 import { useSearchParams } from 'react-router-dom';
 
 function SearchContainer() {

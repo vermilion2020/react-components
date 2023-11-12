@@ -6,8 +6,9 @@ import { useContext, useState, ChangeEvent } from 'react';
 export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar() {
+  const defaultSearchTerm = localStorage.getItem('searchTerm') ?? '';
   const { currentSearchTerm, setCurrentSearchTerm } = useContext(SearchContext);
-  const [searchTerm, setSearchTerm] = useState(currentSearchTerm);
+  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearchClick = async () => {

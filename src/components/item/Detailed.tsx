@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IItem } from '../../model/response.interface';
 import DetailBody from './DetailedCard';
-import { fetchItem } from '../../helpers/search-helper';
+import { fetchItem } from '../../api/search-helper';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function DetailedCard() {

@@ -26,14 +26,19 @@ function PerPage() {
   const itemsPerPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   return (
     <div className="per-page">
-      <div className="per-page--current" onClick={() => setOpened(!opened)}>
+      <div
+        className="per-page--current"
+        data-testid="per-page-current"
+        onClick={() => setOpened(!opened)}
+      >
         {itemsPerPage}
       </div>
       {opened && (
-        <ul className="per-page--container">
+        <ul className="per-page--container" data-testid="per-page-container">
           {PER_PAGE_OPTIONS.map((num) => (
             <li
               key={num}
+              title={`${num}`}
               onClick={() => handleClick(num)}
               className={num === itemsPerPage ? 'active' : ''}
             >

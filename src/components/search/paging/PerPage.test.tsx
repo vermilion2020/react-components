@@ -1,12 +1,12 @@
 import { describe, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { useState } from 'react';
-import Paging from './Paging';
+import PerPage from './PerPage';
 
 let mockSearchParam = '';
-describe('Paging', async () => {
-  it('Click on page button changes url parameters', async () => {
+describe('Per page component', async () => {
+  it('Change per page value changes per_page parameter in url', async () => {
     // Arrange
     vi.mock('react-router-dom', async (importOriginal) => {
       const actual = (await importOriginal()) as object;
@@ -30,16 +30,20 @@ describe('Paging', async () => {
 
     render(
       <MemoryRouter>
-        <Paging loading={false} countItems={90} />
+        <PerPage />
       </MemoryRouter>
     );
-    const testPageNumber = '2';
+    const testPerPage = '40';
 
     // Act
-    fireEvent.click(screen.getByRole('button', { name: testPageNumber }));
+    fireEvent.click(screen.getByTestId('per-page-current'));
+    await waitFor(() => screen.getByTestId('per-page-container'), {
+      timeout: 1000,
+    });
+    fireEvent.click(screen.getByTitle(`${testPerPage}`));
     const newParams = new URLSearchParams(mockSearchParam);
 
     // Expect
-    expect(newParams.get('page')).toEqual(testPageNumber);
+    expect(newParams.get('per_page')).toEqual(testPerPage);
   });
 });
