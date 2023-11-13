@@ -1,6 +1,7 @@
-import axios, { SEARCH_URI } from '../config';
+import axios from 'axios';
 import { AxiosError } from 'axios';
 import { IItem } from '../model/response.interface';
+import { API_BASE_URL } from '../config';
 
 interface ISearchParams {
   page: number;
@@ -20,7 +21,7 @@ export const fetchItems = async (
   let data = [] as IItem[];
   let err = '';
   try {
-    const result = await axios.get(SEARCH_URI, {
+    const result = await axios.get(API_BASE_URL, {
       params,
     });
     data = result.data as IItem[];
@@ -36,7 +37,7 @@ export const fetchItem = async (
   let data = {} as IItem;
   let err = '';
   try {
-    const result = await axios.get(`${SEARCH_URI}${itemId}`);
+    const result = await axios.get(`${API_BASE_URL}${itemId}`);
     data = result.data[0] as IItem;
   } catch (e) {
     err = (e as AxiosError).message;
@@ -54,7 +55,7 @@ export async function fetchCountItems(
     params['beer_name'] = searchTerm;
   }
   params['page'] = page;
-  const newResponse = await axios.get(SEARCH_URI, {
+  const newResponse = await axios.get(API_BASE_URL, {
     params,
   });
   const response = newResponse.data;
