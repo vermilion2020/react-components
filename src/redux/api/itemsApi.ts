@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../../config';
-import { IItem } from '../../model/response.interface';
+import { IError, IItem } from '../../model/response.interface';
+import { setError, setLoading, setItems } from '../features/searchSlice';
 
 interface ISearchParams {
   page: number;
@@ -28,8 +29,35 @@ export const itemsApi = createApi({
         };
         return query;
       },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setLoading(true));
+          const { data } = await queryFulfilled;
+          dispatch(setItems(data));
+          dispatch(setLoading(false));
+          dispatch(setError(null));
+        } catch (e) {
+          dispatch(setLoading(false));
+          const error = <IError>e;
+          dispatch(setError(error.error.data));
+        }
+      },
+    }),
+    getItemsCount: builder.query<IItem[], ISearchParams>({
+      query: ({ page, beer_name }: ISearchParams) => {
+        const params: ISearchParams = { page };
+        if (beer_name && beer_name.length) {
+          params['beer_name'] = beer_name;
+        }
+        const query = {
+          url: '',
+          method: 'GET',
+          params,
+        };
+        return query;
+      },
     }),
   }),
 });
 
-export const { useGetItemsListQuery } = itemsApi;
+export const { useGetItemsListQuery, useGetItemsCountQuery } = itemsApi;

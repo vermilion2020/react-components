@@ -6,14 +6,16 @@ import { useContext } from 'react';
 import { SearchContext } from '../../../context/SearchContext';
 import ItemsStatMessage from './ItemsStatMessage';
 import { NO_ITEMS_MESSAGE } from '../../../config';
+import { useAppSelector } from '../../../redux';
 
 interface ISearchResultsProps {
   isLoading: boolean;
 }
 
 function SearchResults({ isLoading }: ISearchResultsProps) {
-  const { countItems, currentSearchTerm, items } = useContext(SearchContext);
+  const { countItems, currentSearchTerm } = useContext(SearchContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const items = useAppSelector((state) => state.searchState.items);
 
   const setDefault = () => {
     if (searchParams.get('details')) {

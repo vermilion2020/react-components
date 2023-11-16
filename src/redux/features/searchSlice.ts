@@ -10,12 +10,14 @@ interface ISearchState {
   searchTerm: string;
 }
 
+// const defaultSearchTerm = window.localStorage.get('searchTerm') ?? '';
+
 const initialState: ISearchState = {
   loading: false,
   error: null,
   items: [] as IItem[],
   perPage: DEFAULT_PER_PAGE,
-  searchTerm: localStorage.get('searchTerm') ?? '',
+  searchTerm: '',
 };
 
 export const searchSlice = createSlice({

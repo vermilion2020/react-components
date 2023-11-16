@@ -5,6 +5,8 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ItemPage from './pages/ItemPage';
 import { SearchState } from './context/SearchContext';
+import { Provider } from 'react-redux';
+import { store } from './redux/index.ts';
 
 function App() {
   return (
@@ -24,9 +26,11 @@ function App() {
 function WrappedApp() {
   return (
     <BrowserRouter>
-      <SearchState>
-        <App />
-      </SearchState>
+      <Provider store={store}>
+        <SearchState>
+          <App />
+        </SearchState>
+      </Provider>
     </BrowserRouter>
   );
 }
