@@ -10,7 +10,6 @@ function Paging({ loading, countItems }: IPagingProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   const pagesCount = Math.ceil(countItems / perPage);
-
   const setCurrentPage = (page: number) => {
     searchParams.delete('details');
     searchParams.set('page', `${page}`);

@@ -2,20 +2,32 @@ import Preloader from '../Preloader';
 import { IItem } from '../../../model/response.interface';
 import Item from './Item';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { useContext } from 'react';
-import { SearchContext } from '../../../context/SearchContext';
 import ItemsStatMessage from './ItemsStatMessage';
-import { NO_ITEMS_MESSAGE } from '../../../config';
+import {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+  NO_ITEMS_MESSAGE,
+} from '../../../config';
 import { useAppSelector } from '../../../redux';
+import { useGetItemsListQuery } from '../../../redux/api/itemsApi';
 
 interface ISearchResultsProps {
   isLoading: boolean;
 }
 
 function SearchResults({ isLoading }: ISearchResultsProps) {
-  const { countItems, currentSearchTerm } = useContext(SearchContext);
+  const { countItems, searchTerm } = useAppSelector(
+    (state) => state.searchState
+  );
   const [searchParams, setSearchParams] = useSearchParams();
-  const items = useAppSelector((state) => state.searchState.items);
+  const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
+  const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
+
+  const { data: items } = useGetItemsListQuery({
+    page,
+    per_page: perPage,
+    beer_name: searchTerm,
+  });
 
   const setDefault = () => {
     if (searchParams.get('details')) {
@@ -28,16 +40,14 @@ function SearchResults({ isLoading }: ISearchResultsProps) {
     <section className="search-results-section">
       <section className="card-items" onClick={setDefault}>
         {isLoading && <Preloader />}
-        {!isLoading && !items.length && (
+        {!isLoading && items && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
         )}
         {!isLoading && !searchParams.get('details') && (
-          <ItemsStatMessage
-            countItems={countItems}
-            searchTerm={currentSearchTerm}
-          />
+          <ItemsStatMessage countItems={countItems} searchTerm={searchTerm} />
         )}
         {!isLoading &&
+          items &&
           items.length !== 0 &&
           items.map((item: IItem) => <Item item={item} key={item.id} />)}
       </section>

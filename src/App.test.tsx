@@ -12,7 +12,7 @@ describe('App tests', () => {
       screen.getByRole('heading', {
         level: 1,
       })
-    ).toHaveTextContent('React. Tests/Context API');
+    ).toHaveTextContent('Redux. RTK.');
   });
   <WrappedApp />;
 
