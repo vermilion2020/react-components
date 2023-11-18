@@ -7,6 +7,10 @@ export const FETCH_LIST_RESPONSE = http.get(PATH, () => {
   return new HttpResponse(JSON.stringify(ITEMS));
 });
 
+export const EMPTY_LIST_RESPONSE = http.get(PATH, () => {
+  return new HttpResponse(JSON.stringify([]));
+});
+
 export const FETCH_LIST_PAGE_RESPONSE_1 = http.get(PATH, ({ request }) => {
   const url = new URL(request.url);
   url.searchParams.set('page', '1');
@@ -26,7 +30,7 @@ export const FETCH_LIST_PAGE_RESPONSE_3 = http.get(PATH, ({ request }) => {
 });
 
 export const FETCH_ITEM_RESPONSE = http.get(`${PATH}/63`, () => {
-  return new HttpResponse(JSON.stringify(ITEMS[0]));
+  return new HttpResponse(JSON.stringify([{ ...ITEMS[0] }]));
 });
 
 export const handlers = [FETCH_LIST_RESPONSE, FETCH_ITEM_RESPONSE];

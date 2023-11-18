@@ -1,18 +1,19 @@
 import { IItem } from '../../../model/response.interface';
 import noImg from '../../../assets/no-img.jpg';
-import { useSearchParams } from 'react-router-dom';
+import { AppDispatch, useAppSelector } from '../../../redux';
+import { useDispatch } from 'react-redux';
+import { setDetails } from '../../../redux/features/searchSlice';
 
 interface ICardProps {
   item: IItem;
 }
 
 function Item({ item }: ICardProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const { details } = useAppSelector((state) => state.searchState);
   const openCard = (itemId: number) => {
-    if (!searchParams.get('details')) {
-      searchParams.set('details', `${itemId}`);
-      setSearchParams(searchParams);
-    }
+    const newDetails = details ? 0 : itemId;
+    dispatch(setDetails(newDetails));
   };
 
   return (

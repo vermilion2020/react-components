@@ -1,18 +1,22 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import SearchBar, { PLACEHOLDER_TEXT } from './SearchBar';
 import { MemoryRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../test-utils';
+import { setupStore } from '../../redux';
 
 describe('Search bar tests', () => {
   it('Verify that clicking the Search button saves the entered value to the local storage', () => {
     // Arrange
     const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
     const testVelue = 'test';
+    const store = setupStore();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <SearchBar />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { store }
     );
 
     // Act
@@ -29,11 +33,13 @@ describe('Search bar tests', () => {
     // Arrange
     const getItemSpy = vi.spyOn(Storage.prototype, 'getItem');
     const testVelue = 'test';
+    const store = setupStore();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <SearchBar />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { store }
     );
 
     // Act

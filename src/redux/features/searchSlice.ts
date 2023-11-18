@@ -8,6 +8,7 @@ interface ISearchState {
   perPage: number;
   countItems: number;
   searchTerm: string;
+  details: number;
 }
 
 export const getCountItems = createAsyncThunk(
@@ -25,6 +26,7 @@ const initialState: ISearchState = {
   countItems: 0,
   perPage: DEFAULT_PER_PAGE,
   searchTerm: defaultSearchTerm,
+  details: 0,
 };
 
 export const searchSlice = createSlice({
@@ -40,6 +42,12 @@ export const searchSlice = createSlice({
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
     },
+    setPerPage: (state, action: PayloadAction<number>) => {
+      state.perPage = action.payload;
+    },
+    setDetails: (state, action: PayloadAction<number>) => {
+      state.details = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCountItems.fulfilled, (state, action) => {
@@ -50,4 +58,5 @@ export const searchSlice = createSlice({
 
 export default searchSlice.reducer;
 
-export const { setLoading, setError, setSearchTerm } = searchSlice.actions;
+export const { setLoading, setError, setSearchTerm, setPerPage, setDetails } =
+  searchSlice.actions;

@@ -3,25 +3,23 @@ import { IItem } from '../../../model/response.interface';
 import Item from './Item';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import ItemsStatMessage from './ItemsStatMessage';
-import {
-  DEFAULT_PAGE_NUMBER,
-  DEFAULT_PER_PAGE,
-  NO_ITEMS_MESSAGE,
-} from '../../../config';
-import { useAppSelector } from '../../../redux';
+import { DEFAULT_PAGE_NUMBER, NO_ITEMS_MESSAGE } from '../../../config';
+import { AppDispatch, useAppSelector } from '../../../redux';
 import { useGetItemsListQuery } from '../../../redux/api/itemsApi';
+import { setDetails } from '../../../redux/features/searchSlice';
+import { useDispatch } from 'react-redux';
 
 interface ISearchResultsProps {
   isLoading: boolean;
 }
 
 function SearchResults({ isLoading }: ISearchResultsProps) {
-  const { countItems, searchTerm } = useAppSelector(
+  const { searchTerm, details, perPage, countItems } = useAppSelector(
     (state) => state.searchState
   );
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
   const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
-  const perPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
 
   const { data: items } = useGetItemsListQuery({
     page,
@@ -30,9 +28,8 @@ function SearchResults({ isLoading }: ISearchResultsProps) {
   });
 
   const setDefault = () => {
-    if (searchParams.get('details')) {
-      searchParams.delete('details');
-      setSearchParams(searchParams);
+    if (details) {
+      dispatch(setDetails(0));
     }
   };
 
@@ -43,7 +40,7 @@ function SearchResults({ isLoading }: ISearchResultsProps) {
         {!isLoading && items && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
         )}
-        {!isLoading && !searchParams.get('details') && (
+        {!isLoading && !details && (
           <ItemsStatMessage countItems={countItems} searchTerm={searchTerm} />
         )}
         {!isLoading &&
@@ -51,7 +48,7 @@ function SearchResults({ isLoading }: ISearchResultsProps) {
           items.length !== 0 &&
           items.map((item: IItem) => <Item item={item} key={item.id} />)}
       </section>
-      {!!searchParams.get('details') && <Outlet />}
+      {details !== 0 && <Outlet />}
     </section>
   );
 }

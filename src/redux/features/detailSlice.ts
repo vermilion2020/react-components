@@ -10,14 +10,14 @@ interface IDetailState {
 const initialState: IDetailState = {
   loading: false,
   error: null,
-  item: {} as IItem,
+  item: null,
 };
 
 export const detailSlice = createSlice({
   initialState,
   name: 'detailSlice',
   reducers: {
-    setItem: (state, action: PayloadAction<IItem>) => {
+    setItem: (state, action: PayloadAction<IItem | null>) => {
       state.item = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -31,4 +31,4 @@ export const detailSlice = createSlice({
 
 export default detailSlice.reducer;
 
-export const { setItem, setLoading, setError } = detailSlice.actions;
+export const { setLoading, setError, setItem } = detailSlice.actions;

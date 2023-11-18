@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../../config';
 import { IError, IItem } from '../../model/response.interface';
 import { setError, setLoading } from '../features/searchSlice';
+import * as details from '../features/detailSlice';
 
 interface ISearchParams {
   page?: number;
@@ -42,7 +43,26 @@ export const itemsApi = createApi({
         }
       },
     }),
+    getItem: builder.query<IItem[], number>({
+      query: (itemId: number) => ({
+        url: `${itemId}`,
+        method: 'GET',
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(details.setLoading(true));
+          const { data } = await queryFulfilled;
+          dispatch(details.setItem(data[0]));
+          dispatch(details.setError(null));
+          dispatch(details.setLoading(false));
+        } catch (e) {
+          dispatch(details.setLoading(false));
+          const error = <IError>e;
+          dispatch(details.setError(error.error.data));
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetItemsListQuery } = itemsApi;
+export const { useGetItemsListQuery, useGetItemQuery } = itemsApi;

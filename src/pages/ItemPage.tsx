@@ -1,4 +1,4 @@
-import Detailed from '../components/item/Detailed';
+import Detailed from '../components/item/DetailedCard';
 
 function ItemPage() {
   return (

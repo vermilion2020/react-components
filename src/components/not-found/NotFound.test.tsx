@@ -1,16 +1,21 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { App } from '../../App';
 import { MemoryRouter } from 'react-router-dom';
 import DetailedCard from '../item/DetailedCard';
+import { renderWithProviders } from '../../test-utils';
+import { setupStore } from '../../redux';
 
 describe('Not found', () => {
+  const store = setupStore();
+
   it('Renders Not found page for unknown url', () => {
     // Arrange
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/not-found']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { store }
     );
 
     // Expect
@@ -26,10 +31,11 @@ describe('Not found', () => {
 
   it('Renders Not found page inside Details card if incorrect id is passed', () => {
     // Arrange
-    render(
+    renderWithProviders(
       <MemoryRouter>
-        <DetailedCard loading={false} item={null} />
-      </MemoryRouter>
+        <DetailedCard />
+      </MemoryRouter>,
+      { store }
     );
 
     // Expect
