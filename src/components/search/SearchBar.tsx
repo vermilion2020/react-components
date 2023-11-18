@@ -1,20 +1,25 @@
 import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_PAGE_NUMBER } from '../../config';
-import { SearchContext } from '../../context/SearchContext';
-import { useContext, useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { AppDispatch, useAppSelector } from '../../redux';
+import { setSearchTerm } from '../../redux/features/searchSlice';
+import { useDispatch } from 'react-redux';
 
 export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar() {
   const defaultSearchTerm = localStorage.getItem('searchTerm') ?? '';
-  const { currentSearchTerm, setCurrentSearchTerm } = useContext(SearchContext);
-  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
+  const { searchTerm: currentSearchTerm } = useAppSelector(
+    (state) => state.searchState
+  );
+  const [searchValue, setSearchValue] = useState(defaultSearchTerm);
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSearchClick = async () => {
-    if (currentSearchTerm !== searchTerm) {
-      window.localStorage.setItem('searchTerm', `${searchTerm}`);
-      setCurrentSearchTerm(searchTerm);
+    if (currentSearchTerm !== searchValue) {
+      window.localStorage.setItem('searchTerm', `${searchValue}`);
+      dispatch(setSearchTerm(searchValue));
       searchParams.set('page', `${DEFAULT_PAGE_NUMBER}`);
       setSearchParams(searchParams);
     }
@@ -27,7 +32,7 @@ function SearchBar() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.trim();
-    setSearchTerm(term);
+    setSearchValue(term);
   };
 
   return (
@@ -42,7 +47,7 @@ function SearchBar() {
           type="search"
           id="search-input"
           placeholder={PLACEHOLDER_TEXT}
-          value={searchTerm}
+          value={searchValue}
           autoComplete="off"
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
         />
@@ -50,7 +55,7 @@ function SearchBar() {
       <button
         type="button"
         className={
-          searchTerm === currentSearchTerm ? `button disabled` : `button`
+          searchValue === currentSearchTerm ? `button disabled` : `button`
         }
         onClick={() => handleSearchClick()}
       >

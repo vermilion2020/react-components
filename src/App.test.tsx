@@ -1,8 +1,12 @@
 import { describe, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { WrappedApp } from './App';
+import { mswServer } from './setupTests';
+import { FETCH_LIST_RESPONSE } from './mock';
 
 describe('App tests', () => {
+  mswServer.use(FETCH_LIST_RESPONSE);
+
   it('Renders React Components the first level heading', () => {
     // Arrange
     render(<WrappedApp />);
@@ -12,7 +16,7 @@ describe('App tests', () => {
       screen.getByRole('heading', {
         level: 1,
       })
-    ).toHaveTextContent('React. Tests/Context API');
+    ).toHaveTextContent('Redux. RTK.');
   });
   <WrappedApp />;
 

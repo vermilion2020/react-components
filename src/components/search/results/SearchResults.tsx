@@ -2,23 +2,34 @@ import Preloader from '../Preloader';
 import { IItem } from '../../../model/response.interface';
 import Item from './Item';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { useContext } from 'react';
-import { SearchContext } from '../../../context/SearchContext';
 import ItemsStatMessage from './ItemsStatMessage';
-import { NO_ITEMS_MESSAGE } from '../../../config';
+import { DEFAULT_PAGE_NUMBER, NO_ITEMS_MESSAGE } from '../../../config';
+import { AppDispatch, useAppSelector } from '../../../redux';
+import { useGetItemsListQuery } from '../../../redux/api/itemsApi';
+import { setDetails } from '../../../redux/features/searchSlice';
+import { useDispatch } from 'react-redux';
 
 interface ISearchResultsProps {
   isLoading: boolean;
 }
 
 function SearchResults({ isLoading }: ISearchResultsProps) {
-  const { countItems, currentSearchTerm, items } = useContext(SearchContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchTerm, details, perPage, countItems } = useAppSelector(
+    (state) => state.searchState
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
+  const page = +(searchParams.get('page') ?? DEFAULT_PAGE_NUMBER);
+
+  const { data: items } = useGetItemsListQuery({
+    page,
+    per_page: perPage,
+    beer_name: searchTerm,
+  });
 
   const setDefault = () => {
-    if (searchParams.get('details')) {
-      searchParams.delete('details');
-      setSearchParams(searchParams);
+    if (details) {
+      dispatch(setDetails(0));
     }
   };
 
@@ -26,20 +37,18 @@ function SearchResults({ isLoading }: ISearchResultsProps) {
     <section className="search-results-section">
       <section className="card-items" onClick={setDefault}>
         {isLoading && <Preloader />}
-        {!isLoading && !items.length && (
+        {!isLoading && items && !items.length && (
           <div className="no-items-message">{NO_ITEMS_MESSAGE}</div>
         )}
-        {!isLoading && !searchParams.get('details') && (
-          <ItemsStatMessage
-            countItems={countItems}
-            searchTerm={currentSearchTerm}
-          />
+        {!isLoading && !details && (
+          <ItemsStatMessage countItems={countItems} searchTerm={searchTerm} />
         )}
         {!isLoading &&
+          items &&
           items.length !== 0 &&
           items.map((item: IItem) => <Item item={item} key={item.id} />)}
       </section>
-      {!!searchParams.get('details') && <Outlet />}
+      {details !== 0 && <Outlet />}
     </section>
   );
 }

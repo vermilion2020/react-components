@@ -1,10 +1,15 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import Fallback from './Fallback';
+import { renderWithProviders } from '../../test-utils';
+import { mswServer } from '../../setupTests';
+import { FETCH_LIST_RESPONSE } from '../../mock';
 
 describe('App tests', () => {
   it('Renders Fallback component properly', () => {
-    render(<Fallback />);
+    mswServer.use(FETCH_LIST_RESPONSE);
+
+    renderWithProviders(<Fallback />);
 
     expect(
       screen.getByRole('heading', {

@@ -1,20 +1,29 @@
-import { useSearchParams } from 'react-router-dom';
-import { IItem } from '../../model/response.interface';
 import NotFound from '../not-found/NotFound';
 import Preloader from '../search/Preloader';
+import { AppDispatch, useAppSelector } from '../../redux';
+import { useGetItemQuery } from '../../redux/api/itemsApi';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setDetails } from '../../redux/features/searchSlice';
 
-interface IItemProfileProps {
-  item: IItem | null;
-  loading: boolean;
-}
+function DetailedCard() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, item, error } = useAppSelector((state) => state.detailState);
+  const { details } = useAppSelector((state) => state.searchState);
+  if (details) {
+    useGetItemQuery(details);
+  }
 
-function DetailedCard({ item, loading }: IItemProfileProps) {
-  const [searchParams, setSearchParams] = useSearchParams({});
+  useEffect(() => {
+    if (error) {
+      throw new Error(error);
+    }
+  }, [error]);
 
   const closeCard = () => {
-    searchParams.delete('details');
-    setSearchParams(searchParams);
+    dispatch(setDetails(0));
   };
+
   return (
     <>
       <div className="cross-icon" data-testid="cross-icon" onClick={closeCard}>
@@ -22,7 +31,7 @@ function DetailedCard({ item, loading }: IItemProfileProps) {
       </div>
       {loading && <Preloader />}
       {!loading && !item && <NotFound />}
-      {!loading && item && (
+      {!loading && item && !!details && (
         <div className="item-profile" data-testid="item-profile">
           <img
             src={item.image_url}

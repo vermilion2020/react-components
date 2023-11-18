@@ -1,39 +1,21 @@
-import { describe, it, vi } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { describe, it } from 'vitest';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { useState } from 'react';
 import PerPage from './PerPage';
+import { setupStore } from '../../../redux';
+import { renderWithProviders } from '../../../test-utils';
 
-let mockSearchParam = '';
 describe('Per page component', async () => {
   it('Change per page value changes per_page parameter in url', async () => {
     // Arrange
-    vi.mock('react-router-dom', async (importOriginal) => {
-      const actual = (await importOriginal()) as object;
-
-      return {
-        ...actual,
-        useSearchParams: () => {
-          const [params, setParams] = useState(
-            new URLSearchParams(mockSearchParam)
-          );
-          return [
-            params,
-            (newParams: string) => {
-              mockSearchParam = newParams;
-              setParams(new URLSearchParams(newParams));
-            },
-          ];
-        },
-      };
-    });
-
-    render(
+    const testPerPage = '40';
+    const store = setupStore();
+    renderWithProviders(
       <MemoryRouter>
         <PerPage />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { store }
     );
-    const testPerPage = '40';
 
     // Act
     fireEvent.click(screen.getByTestId('per-page-current'));
@@ -41,9 +23,10 @@ describe('Per page component', async () => {
       timeout: 5000,
     });
     fireEvent.click(screen.getByTitle(`${testPerPage}`));
-    const newParams = new URLSearchParams(mockSearchParam);
 
     // Expect
-    expect(newParams.get('per_page')).toEqual(testPerPage);
+    expect(screen.getByTestId('per-page-current')).toHaveTextContent(
+      `${testPerPage}`
+    );
   });
 });

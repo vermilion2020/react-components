@@ -1,24 +1,31 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import ItemsStatMessage from './ItemsStatMessage';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../../../config';
+import { DEFAULT_PAGE_NUMBER } from '../../../config';
+import { setupStore } from '../../../redux';
+import { renderWithProviders } from '../../../test-utils';
+import { setPerPage } from '../../../redux/features/searchSlice';
 
 describe('Status message for items', () => {
   it('Renders proper status message for specified count items and search term', () => {
     // Arrange
     const testCount = 5;
     const testTerm = 'test';
-    render(
-      <MemoryRouter initialEntries={['/not-found']}>
+    const perPage = 40;
+    const store = setupStore();
+    store.dispatch(setPerPage(perPage));
+    renderWithProviders(
+      <MemoryRouter>
         <ItemsStatMessage countItems={testCount} searchTerm={testTerm} />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { store }
     );
 
     // Expect
     expect(
       screen.getByText(
-        `current page: ${DEFAULT_PAGE_NUMBER} | items per page: ${DEFAULT_PER_PAGE} | count items for "${testTerm}": ${testCount}`
+        `current page: ${DEFAULT_PAGE_NUMBER} | items per page: ${perPage} | count items for "${testTerm}": ${testCount}`
       )
     ).toBeVisible();
   });

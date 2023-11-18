@@ -22,6 +22,12 @@ export interface IItem {
   contributed_by: string;
 }
 
+export interface IError {
+  error: {
+    data: string;
+  };
+}
+
 export interface BoilVolume {
   value: number;
   unit: string;

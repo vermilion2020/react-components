@@ -4,7 +4,8 @@ import NotFoundPage from './pages/NotFound';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ItemPage from './pages/ItemPage';
-import { SearchState } from './context/SearchContext';
+import { Provider } from 'react-redux';
+import { setupStore } from './redux/index.ts';
 
 function App() {
   return (
@@ -24,9 +25,9 @@ function App() {
 function WrappedApp() {
   return (
     <BrowserRouter>
-      <SearchState>
+      <Provider store={setupStore({})}>
         <App />
-      </SearchState>
+      </Provider>
     </BrowserRouter>
   );
 }

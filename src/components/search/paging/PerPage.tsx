@@ -1,29 +1,27 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {
-  DEFAULT_PAGE_NUMBER,
-  DEFAULT_PER_PAGE,
-  PER_PAGE_OPTIONS,
-} from '../../../config';
-import { SearchContext } from '../../../context/SearchContext';
+import { DEFAULT_PAGE_NUMBER, PER_PAGE_OPTIONS } from '../../../config';
+import { AppDispatch, useAppSelector } from '../../../redux';
+import { useDispatch } from 'react-redux';
+import { setDetails, setPerPage } from '../../../redux/features/searchSlice';
 
 function PerPage() {
   const [opened, setOpened] = useState(false);
-  const { currentSearchTerm } = useContext(SearchContext);
+  const { searchTerm, perPage } = useAppSelector((state) => state.searchState);
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setOpened(false);
-  }, [searchParams, currentSearchTerm]);
+  }, [searchParams, searchTerm]);
 
   const handleClick = (num: number) => {
-    searchParams.set('per_page', `${num}`);
     searchParams.set('page', `${DEFAULT_PAGE_NUMBER}`);
-    searchParams.delete('details');
+    dispatch(setPerPage(num));
+    dispatch(setDetails(0));
     setSearchParams(searchParams);
     setOpened(false);
   };
-  const itemsPerPage = +(searchParams.get('per_page') ?? DEFAULT_PER_PAGE);
   return (
     <div className="per-page">
       <div
@@ -31,7 +29,7 @@ function PerPage() {
         data-testid="per-page-current"
         onClick={() => setOpened(!opened)}
       >
-        {itemsPerPage}
+        {perPage}
       </div>
       {opened && (
         <ul className="per-page--container" data-testid="per-page-container">
@@ -40,7 +38,7 @@ function PerPage() {
               key={num}
               title={`${num}`}
               onClick={() => handleClick(num)}
-              className={num === itemsPerPage ? 'active' : ''}
+              className={num === perPage ? 'active' : ''}
             >
               {num}
             </li>

@@ -1,37 +1,84 @@
 import { describe, it } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { setupServer } from 'msw/node';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import DetailedCard from './DetailedCard';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ITEMS } from '../../model/test-items';
-import HomePage from '../../pages/Home';
-import ItemPage from '../../pages/ItemPage';
 import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../mock';
+import { renderWithProviders } from '../../test-utils';
+import { mswServer } from '../../setupTests';
+import { setupStore } from '../../redux';
+import { setItem, setLoading } from '../../redux/features/detailSlice';
+import * as search from '../../redux/features/searchSlice';
+import SearchResults from '../search/results/SearchResults';
 
 describe('Detailed Card tests', () => {
-  const mswServer = setupServer();
+  mswServer.use(FETCH_ITEM_RESPONSE);
 
   it('Preloader is displayed while fetching data', () => {
     // Arrange
-    const item = ITEMS[0];
-    render(
+    const store = setupStore();
+    store.dispatch(setLoading(true));
+    renderWithProviders(
       <MemoryRouter>
-        <DetailedCard loading={true} item={item} />
-      </MemoryRouter>
+        <DetailedCard />
+      </MemoryRouter>,
+      { store }
     );
 
     // Expect
     expect(screen.getByTestId('preloader')).toBeVisible();
   });
 
-  it('Detailed card component correctly displays the detailed card data', () => {
+  it('Clicking the close button hides the component', async () => {
+    // Arrange
+    mswServer.use(FETCH_LIST_RESPONSE);
+    mswServer.use(FETCH_ITEM_RESPONSE);
+    const item = ITEMS[0];
+    const store = setupStore();
+    store.dispatch(setItem(item));
+    store.dispatch(setLoading(false));
+    store.dispatch(search.setDetails(item.id));
+    store.dispatch(search.setLoading(false));
+
+    renderWithProviders(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<SearchResults isLoading={false} />}>
+            <Route path="" element={<DetailedCard />} />
+          </Route>
+        </Routes>
+      </MemoryRouter>,
+      { store }
+    );
+
+    // Act
+    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 5000 });
+    fireEvent.click(screen.getByTestId('cross-icon'));
+
+    // Expect
+    expect(() => screen.getByTestId('item-profile')).toThrow();
+  });
+
+  it('Detailed card component correctly displays the detailed card data', async () => {
     // Arrange
     const item = ITEMS[0];
-    render(
+    mswServer.use(FETCH_ITEM_RESPONSE);
+
+    const store = setupStore();
+    store.dispatch(setItem(item));
+    store.dispatch(search.setDetails(item.id));
+    store.dispatch(setLoading(false));
+
+    renderWithProviders(
       <MemoryRouter>
-        <DetailedCard loading={false} item={item} />
-      </MemoryRouter>
+        <DetailedCard />
+      </MemoryRouter>,
+      { store }
     );
+
+    await waitFor(() => screen.getByTestId('item-profile'), {
+      timeout: 5000,
+    });
 
     // Expect
     expect(
@@ -46,29 +93,4 @@ describe('Detailed Card tests', () => {
       expect(screen.getByText(item)).toBeVisible();
     });
   });
-
-  it('Clicking the close button hides the component', async () => {
-    // Arrange
-    mswServer.use(FETCH_LIST_RESPONSE);
-    mswServer.use(FETCH_ITEM_RESPONSE);
-
-    render(
-      <MemoryRouter initialEntries={['?details=63']}>
-        <Routes>
-          <Route path="/" element={<HomePage />}>
-            <Route path="" element={<ItemPage />} />
-          </Route>
-        </Routes>
-      </MemoryRouter>
-    );
-
-    // Act
-    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 5000 });
-    fireEvent.click(screen.getByTestId('cross-icon'));
-
-    // Expect
-    expect(() => screen.getByTestId('item-profile')).toThrow();
-  });
-
-  mswServer.close();
 });

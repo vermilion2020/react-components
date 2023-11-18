@@ -1,19 +1,20 @@
 import { useSearchParams } from 'react-router-dom';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../../../config';
+import { DEFAULT_PAGE_NUMBER } from '../../../config';
+import { useAppSelector } from '../../../redux';
 
-interface IItemsStatMessage {
+interface IItemsStatMessageProps {
   countItems: number;
   searchTerm: string;
 }
 
-function ItemsStatMessage({ countItems, searchTerm }: IItemsStatMessage) {
+function ItemsStatMessage({ countItems, searchTerm }: IItemsStatMessageProps) {
+  const { perPage } = useAppSelector((state) => state.searchState);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get('page') ?? DEFAULT_PAGE_NUMBER;
-  const itemsPerPage = searchParams.get('per_page') ?? DEFAULT_PER_PAGE;
   const term = !searchTerm.length ? 'an empty term' : `"${searchTerm}"`;
   return (
     <div className="items-stat-message">
-      {`current page: ${currentPage} | items per page: ${itemsPerPage} | count items for ${term}: ${countItems}`}
+      {`current page: ${currentPage} | items per page: ${perPage} | count items for ${term}: ${countItems}`}
     </div>
   );
 }
