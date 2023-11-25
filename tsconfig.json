@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,11 +21,27 @@
     "noEmit": true,
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "incremental": true
   },
-  "types": ["node", "jest", "@testing-library/jest-dom"],
-  "include": ["src", ".eslintrc.cjs", "vite.config.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "types": [
+    "node",
+    "jest",
+    "@testing-library/jest-dom"
+  ],
+  "include": [
+    "src",
+    ".eslintrc.cjs",
+    "vite.config.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

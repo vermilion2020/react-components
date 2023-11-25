@@ -1,0 +1,67 @@
+.appHeader,
+.appFooter {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: center;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.appContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footerContainer {
+  width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rsschool {
+  margin-left: 1.5rem;
+  height: 3rem;
+  width: 6rem;
+}
+
+.rsschool:hover path {
+  fill: #d629ce;
+}
+
+.copyright {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.copyright a {
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.copyright a:hover {
+  text-decoration: underline;
+}
+
+.github {
+  color: #fff;
+}
+
+.imagesLink {
+  font-size: 1.1rem;
+}
+
+.imagesLink:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1200px) {
+  .footerContainer {
+    padding: 0 0.8rem;
+  }
+}

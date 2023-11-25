@@ -1,0 +1,73 @@
+.perPageCurrent,
+.pagingButton {
+  background-color: #662f94;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: 0;
+  color: #fff;
+  display: inline-block;
+  line-height: 2em;
+  margin: 0 0.1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.perPageCurrent:hover,
+.pagingButton:hover {
+  color: #fff;
+  background-color: #d629ce;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.perPageCurrent.active,
+.perPageCurrent.active:hover,
+.pagingButton.active,
+.pagingButton.active:hover {
+    cursor: default;
+    border: 0;
+    background-color: #7d0ed7;
+  }
+
+.perPageCurrent.disabled,
+.perPageCurrent.disabled:hover,
+.pagingButton.disabled,
+.pagingButton.disabled:hover {
+    color: #fff;
+    background-color: #a683b4;
+    cursor: default;
+  }
+
+.disabled .pagingButton,
+.disabled .pagingButton:hover {
+  color: #fff;
+  background-color: #a683b4;
+  cursor: default;
+}
+
+.perPageContainer {
+  position: absolute;
+  background-color: #662f94;
+  border-radius: 0.3rem;
+  color: #fff;
+  width: 2rem;
+  list-style-type: none;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+.perPageContainer li {
+  margin: 0;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.perPageContainer li.active {
+  background-color: #7d0ed7;
+}
+
+.perPageContainer li:hover {
+  background-color: #d629ce;
+}
