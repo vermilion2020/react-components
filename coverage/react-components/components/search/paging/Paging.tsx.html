@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.55% </span>
+                <span class="strong">91.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>87/94</span>
+                <span class='fraction'>87/95</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/18</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.55% </span>
+                <span class="strong">91.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>87/94</span>
+                <span class='fraction'>87/95</span>
             </div>
         
             
@@ -157,7 +157,9 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -177,7 +179,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -210,8 +212,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -255,6 +257,7 @@
 import classes from '../../../styles/paging.module.css';
 import { AppDispatch, useAppSelector } from '../../../redux';
 import { useRouter } from 'next/navigation';
+import * as r from 'next/router';
 import { setPage } from '../../../redux/features/searchSlice';
 import { useDispatch } from 'react-redux';
 &nbsp;
@@ -264,19 +267,19 @@ interface IPagingProps {
 }
 &nbsp;
 function Paging({ loading, countItems }: IPagingProps) {
-  const { page: currentPage, perPage } = useAppSelector(
-    (state) =&gt; state.searchState
-  );
+  const { perPage, searchTerm } = useAppSelector((state) =&gt; state.searchState);
+  const currentPage = +(r.useRouter().query?.page ?? '');
   const router = useRouter();
   const dispatch = useDispatch&lt;AppDispatch&gt;();
   const pagesCount = Math.ceil(countItems / perPage);
 &nbsp;
   const setCurrentPage = (page: number) =&gt; {
     dispatch(setPage(page));
+    localStorage.setItem('searchTerm', `${searchTerm}`);
     router.push(`/page/${page}`);
   };
 &nbsp;
-  const current = currentPage &amp;&amp; +currentPage &gt;= 0 ? +<span class="branch-0 cbranch-no" title="branch not covered" >currentPage : 1;</span>
+  const current = <span class="branch-0 cbranch-no" title="branch not covered" >currentPage &amp;&amp; +currentPage &gt;= <span class="branch-0 cbranch-no" title="branch not covered" >0 ? +</span>currentPage : 1</span>;
   let pages = [] as number[];
   let first = 1;
   if (current &gt; <span class="branch-0 cbranch-no" title="branch not covered" >pagesCount &amp;&amp; pagesCount &gt; 5) <span class="branch-0 cbranch-no" title="branch not covered" >{</span></span>
@@ -303,8 +306,8 @@ function Paging({ loading, countItems }: IPagingProps) {
       &lt;button
         onClick={<span class="fstat-no" title="function not covered" >() =&gt; setCurrentPage(1)}</span>
         className={
-          current &gt; 1
-            ? classes.pagingButton
+          current &gt; <span class="branch-0 cbranch-no" title="branch not covered" >1</span>
+<span class="cstat-no" title="statement not covered" >            ? classes.pagingButton</span>
             : `${classes.pagingButton} ${classes.disabled}`
         }
       &gt;
@@ -352,7 +355,7 @@ export default Paging;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-25T22:16:22.164Z
+                at 2023-11-26T12:40:28.359Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

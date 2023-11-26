@@ -24,20 +24,14 @@ describe('Search bar tests', () => {
     expect(localStorage.getItem('searchTerm')).toEqual(testVelue);
   });
 
-  it('Check that the component retrieves the value from the local storage upon mounting', () => {
+  it('Check that the component has empty value on loading', () => {
     // Arrange
-    const getItemSpy = vi.spyOn(Storage.prototype, 'getItem');
-    const testVelue = 'test';
     const store = setupStore();
 
     renderWithProviders(<SearchBar />, { store });
 
-    // Act
-    localStorage.setItem('searchTerm', testVelue);
-
     // Expect
     const searchBarInput = screen.getByPlaceholderText(PLACEHOLDER_TEXT);
-    expect(getItemSpy).toHaveBeenCalledWith('searchTerm');
-    expect(searchBarInput).toHaveValue(testVelue);
+    expect(searchBarInput).toHaveValue('');
   });
 });

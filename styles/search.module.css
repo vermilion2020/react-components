@@ -102,6 +102,57 @@
   white-space: wrap;
 }
 
+.searchResultsSection {
+  width: 100%;
+  display: flex;
+  gap: 0.7rem;
+  flex-direction: row;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.noItemsMessage {
+  text-align: center;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.cardItems {
+  display: flex;
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 1rem 0.3rem;
+  justify-content: space-around;
+  min-width: 46%;
+}
+
+
+.preloader {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+
+.preloaderImg {
+  width: 70px;
+  height: 70px;
+}
+
+@media screen and (max-width: 1200px) {
+  .cardItems {
+    min-width: 46vw;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cardItems {
+    min-width: 300px;
+  }
+}
+
 @media screen and (max-width: 950px) {
   .searchForm {
     flex-wrap: wrap;

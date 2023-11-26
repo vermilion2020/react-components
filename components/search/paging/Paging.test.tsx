@@ -9,8 +9,6 @@ describe('Paging', async () => {
   it('Click on page button changes the page value', async () => {
     // Arrange
     const store = setupStore();
-    //store.dispatch(setPerPage(perPage));
-    //store.dispatch(setPage(page));
     renderWithProviders(<Paging loading={false} countItems={90} />, { store });
     const testPageNumber = '2';
 

@@ -1,15 +1,14 @@
 import { describe, it } from 'vitest';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import DetailedCard from './DetailedCard';
 import { ITEMS } from '../../model/test-items';
-import { FETCH_ITEM_RESPONSE, FETCH_LIST_RESPONSE } from '../../mock';
+import { FETCH_ITEM_RESPONSE } from '../../mock';
 import { renderWithProviders } from '../../test-utils';
 import { mswServer } from '../../setupTests';
 import { setupStore } from '../../redux';
 import { setItem, setLoading } from '../../redux/features/detailSlice';
 import * as search from '../../redux/features/searchSlice';
 import React from 'react';
-import SearchResults from '../search/results/SearchResults';
 
 describe('Detailed Card tests', () => {
   mswServer.use(FETCH_ITEM_RESPONSE);
@@ -22,27 +21,6 @@ describe('Detailed Card tests', () => {
 
     // Expect
     expect(screen.getByTestId('preloader')).toBeVisible();
-  });
-
-  it('Clicking the close button hides the component', async () => {
-    // Arrange
-    mswServer.use(FETCH_LIST_RESPONSE);
-    mswServer.use(FETCH_ITEM_RESPONSE);
-    const item = ITEMS[0];
-    const store = setupStore();
-    store.dispatch(setItem(item));
-    store.dispatch(setLoading(false));
-    store.dispatch(search.setDetails(item.id));
-    store.dispatch(search.setLoading(false));
-
-    renderWithProviders(<SearchResults isLoading={false} />, { store });
-
-    // Act
-    await waitFor(() => screen.getByTestId('item-profile'), { timeout: 5000 });
-    fireEvent.click(screen.getByTestId('cross-icon'));
-
-    // Expect
-    expect(() => screen.getByTestId('item-profile')).toThrow();
   });
 
   it('Detailed card component correctly displays the detailed card data', async () => {

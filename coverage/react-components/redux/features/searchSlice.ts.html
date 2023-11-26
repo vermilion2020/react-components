@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.58% </span>
+                <span class="strong">90.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>73/78</span>
+                <span class='fraction'>64/71</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/8</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.58% </span>
+                <span class="strong">90.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>73/78</span>
+                <span class='fraction'>64/71</span>
             </div>
         
             
@@ -134,16 +134,7 @@
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -179,9 +170,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -195,18 +185,14 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -222,7 +208,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../../config';
 import { fetchCountItems } from '../../api/search-helper';
-import { IItem } from '../../model/response.interface';
 &nbsp;
 export interface ISearchState {
   loading: boolean;
@@ -232,7 +217,6 @@ export interface ISearchState {
   countItems: number;
   searchTerm: string;
   details: number;
-  items: IItem[];
 }
 &nbsp;
 export const getCountItems = createAsyncThunk(
@@ -250,16 +234,15 @@ const initialState: ISearchState = {
   page: DEFAULT_PAGE_NUMBER,
   searchTerm: '',
   details: 0,
-  items: [] as IItem[],
 };
 &nbsp;
 export const searchSlice = createSlice({
   initialState,
   name: 'searchSlice',
   reducers: {
-    setLoading: (state, action: PayloadAction&lt;boolean&gt;) =&gt; {
-      state.loading = action.payload;
-    },
+    setLoading: <span class="fstat-no" title="function not covered" >(state, action: PayloadAction&lt;boolean&gt;) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      state.loading = action.payload;</span>
+<span class="cstat-no" title="statement not covered" >    },</span>
     setError: <span class="fstat-no" title="function not covered" >(state, action: PayloadAction&lt;string | null&gt;) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      state.error = action.payload;</span>
 <span class="cstat-no" title="statement not covered" >    },</span>
@@ -274,9 +257,6 @@ export const searchSlice = createSlice({
     },
     setDetails: (state, action: PayloadAction&lt;number&gt;) =&gt; {
       state.details = action.payload;
-    },
-    setItems: (state, action: PayloadAction&lt;IItem[]&gt;) =&gt; {
-      state.items = action.payload;
     },
   },
   extraReducers: (builder) =&gt; {
@@ -294,7 +274,6 @@ export const {
   setSearchTerm,
   setPerPage,
   setDetails,
-  setItems,
   setPage,
 } = searchSlice.actions;
 &nbsp;</pre></td></tr></table></pre>
@@ -304,7 +283,7 @@ export const {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-25T22:16:22.164Z
+                at 2023-11-26T12:40:28.359Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

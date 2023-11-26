@@ -10,15 +10,10 @@ import classes from '../../styles/search.module.css';
 export const PLACEHOLDER_TEXT = 'Search for a beer';
 
 function SearchBar() {
-  let defaultSearchTerm = '';
-  if (typeof window !== 'undefined') {
-    defaultSearchTerm = localStorage.getItem('searchTerm') ?? '';
-  }
-
   const { searchTerm: currentSearchTerm } = useAppSelector(
     (state) => state.searchState
   );
-  const [searchValue, setSearchValue] = useState(defaultSearchTerm);
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 

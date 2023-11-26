@@ -2,6 +2,7 @@ import React from 'react';
 import classes from '../../../styles/paging.module.css';
 import { AppDispatch, useAppSelector } from '../../../redux';
 import { useRouter } from 'next/navigation';
+import * as r from 'next/router';
 import { setPage } from '../../../redux/features/searchSlice';
 import { useDispatch } from 'react-redux';
 
@@ -11,15 +12,15 @@ interface IPagingProps {
 }
 
 function Paging({ loading, countItems }: IPagingProps) {
-  const { page: currentPage, perPage } = useAppSelector(
-    (state) => state.searchState
-  );
+  const { perPage, searchTerm } = useAppSelector((state) => state.searchState);
+  const currentPage = +(r.useRouter().query?.page ?? '');
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const pagesCount = Math.ceil(countItems / perPage);
 
   const setCurrentPage = (page: number) => {
     dispatch(setPage(page));
+    localStorage.setItem('searchTerm', `${searchTerm}`);
     router.push(`/page/${page}`);
   };
 

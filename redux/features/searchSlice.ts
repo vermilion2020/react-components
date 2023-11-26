@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PER_PAGE } from '../../config';
 import { fetchCountItems } from '../../api/search-helper';
-import { IItem } from '../../model/response.interface';
 
 export interface ISearchState {
   loading: boolean;
@@ -11,7 +10,6 @@ export interface ISearchState {
   countItems: number;
   searchTerm: string;
   details: number;
-  items: IItem[];
 }
 
 export const getCountItems = createAsyncThunk(
@@ -29,7 +27,6 @@ const initialState: ISearchState = {
   page: DEFAULT_PAGE_NUMBER,
   searchTerm: '',
   details: 0,
-  items: [] as IItem[],
 };
 
 export const searchSlice = createSlice({
@@ -54,9 +51,6 @@ export const searchSlice = createSlice({
     setDetails: (state, action: PayloadAction<number>) => {
       state.details = action.payload;
     },
-    setItems: (state, action: PayloadAction<IItem[]>) => {
-      state.items = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCountItems.fulfilled, (state, action) => {
@@ -73,6 +67,5 @@ export const {
   setSearchTerm,
   setPerPage,
   setDetails,
-  setItems,
   setPage,
 } = searchSlice.actions;

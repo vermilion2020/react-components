@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../styles/search-results.module.css';
+import classes from '../../styles/search.module.css';
 import preloaderImg from '../../public/preloader.gif';
 import Image from 'next/image';
 
