@@ -3,32 +3,23 @@ import { describe, it, vi } from 'vitest';
 import { screen, fireEvent, waitFor, act } from '@testing-library/react';
 import Item from './Item';
 import { ITEMS } from '../../../model/test-items';
-import {
-  FETCH_ITEM_RESPONSE,
-  FETCH_LIST_PAGE_RESPONSE_1,
-  FETCH_LIST_PAGE_RESPONSE_2,
-  FETCH_LIST_PAGE_RESPONSE_3,
-  FETCH_LIST_RESPONSE,
-} from '../../../mock';
+import { EMPTY_LIST_RESPONSE, FETCH_ITEM_RESPONSE } from '../../../mock';
 import { mswServer } from '../../../setupTests';
 import { renderWithProviders } from '../../../test-utils';
 import { setupStore } from '../../../redux';
 import { setLoading } from '../../../redux/features/searchSlice';
-import SearchContainer from '../SearchContainer';
+import SearchResults from './SearchResults';
 
 describe('Item card tests', () => {
   // Arrange
   const item = ITEMS[0];
 
-  it.skip('Validate that clicking on a card opens a detailed card component', async () => {
+  it('Validate that clicking on a card opens a detailed card component', async () => {
     // Arrange
     const store = setupStore();
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_1);
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_2);
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_3);
     store.dispatch(setLoading(false));
     await act(async () => {
-      renderWithProviders(<SearchContainer loading={false} items={ITEMS} />, {
+      renderWithProviders(<SearchResults isLoading={false} items={ITEMS} />, {
         store,
       });
     });
@@ -44,19 +35,16 @@ describe('Item card tests', () => {
     expect(screen.getByTestId('item-profile')).toBeVisible();
   });
 
-  it.skip('Check that clicking triggers an additional API call to fetch detailed information', async () => {
+  it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
     // Arrange
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_1);
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_2);
-    mswServer.use(FETCH_LIST_PAGE_RESPONSE_3);
-    mswServer.use(FETCH_LIST_RESPONSE);
+    mswServer.use(EMPTY_LIST_RESPONSE);
     const store = setupStore();
     const { requestSpy } = vi.hoisted(() => {
       return { requestSpy: vi.fn() };
     });
     //store.dispatch(setPage(page));
 
-    renderWithProviders(<SearchContainer loading={false} items={ITEMS} />, {
+    renderWithProviders(<SearchResults isLoading={false} items={ITEMS} />, {
       store,
     });
 

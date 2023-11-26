@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.14% </span>
+                <span class="strong">97.18% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/71</span>
+                <span class='fraction'>69/71</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.14% </span>
+                <span class="strong">97.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>64/71</span>
+                <span class='fraction'>69/71</span>
             </div>
         
             
@@ -151,8 +151,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -170,8 +170,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -185,14 +185,14 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -222,8 +222,8 @@ export interface ISearchState {
 export const getCountItems = createAsyncThunk(
   'getCountItems',
   (searchTerm: string) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return fetchCountItems(searchTerm);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+    return fetchCountItems(searchTerm);
+  }
 );
 &nbsp;
 const initialState: ISearchState = {
@@ -240,9 +240,9 @@ export const searchSlice = createSlice({
   initialState,
   name: 'searchSlice',
   reducers: {
-    setLoading: <span class="fstat-no" title="function not covered" >(state, action: PayloadAction&lt;boolean&gt;) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      state.loading = action.payload;</span>
-<span class="cstat-no" title="statement not covered" >    },</span>
+    setLoading: (state, action: PayloadAction&lt;boolean&gt;) =&gt; {
+      state.loading = action.payload;
+    },
     setError: <span class="fstat-no" title="function not covered" >(state, action: PayloadAction&lt;string | null&gt;) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      state.error = action.payload;</span>
 <span class="cstat-no" title="statement not covered" >    },</span>
@@ -261,7 +261,7 @@ export const searchSlice = createSlice({
   },
   extraReducers: (builder) =&gt; {
     builder.addCase(getCountItems.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >      state.countItems = action.payload;</span>
+      state.countItems = action.payload;
     });
   },
 });
@@ -283,7 +283,7 @@ export const {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-26T12:40:28.359Z
+                at 2023-11-26T13:37:20.454Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

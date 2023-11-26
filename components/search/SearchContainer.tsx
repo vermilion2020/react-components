@@ -51,7 +51,7 @@ function SearchContainer({ items, loading }: ISearchContainerProps) {
             <button
               className={classes.button}
               onClick={() => {
-                setError('Error!!!');
+                dispatch(setError('Error!!!'));
               }}
               data-testid="error-button"
             >
