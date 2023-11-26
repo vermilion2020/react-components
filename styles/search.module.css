@@ -1,0 +1,180 @@
+.searchContainer {
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-family: 'Roboto', sans-serif;
+  place-items: center;
+  scroll-behavior: smooth;
+  gap: 20px;
+}
+
+.searchContainer::-webkit-scrollbar {
+  width: 12px;
+  height: 90%;
+}
+
+.searchContainer::-webkit-scrollbar-track {
+  background: #fff;
+  z-index: -1;
+}
+
+.searchContainer::-webkit-scrollbar-thumb {
+  background-color: #282c34;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 3px solid #fff;
+}
+
+.content {
+  flex-grow: 1;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.button {
+  width: 120px;
+  height: 35px;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  background-color: #7d0ed7;
+  color: #fff;
+  border: 0;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #d629ce;
+}
+
+.button.disabled,
+.button.disabled:hover {
+  background-color: #a683b4;
+  cursor: default;
+}
+
+.searchInput {
+  width: 18rem;
+  height: 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+}
+
+.searchBarSection {
+  max-height: 200px;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.fallbackContainer {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  height: 100%;
+  align-items: center;
+  padding: 20px;
+}
+
+.fallbackImg {
+  max-width: 90vw;
+}
+
+.itemsStatMessage {
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: wrap;
+}
+
+.searchResultsSection {
+  width: 100%;
+  display: flex;
+  gap: 0.7rem;
+  flex-direction: row;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.noItemsMessage {
+  text-align: center;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.cardItems {
+  display: flex;
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 1rem 0.3rem;
+  justify-content: space-around;
+  min-width: 46%;
+}
+
+
+.preloader {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+
+.preloaderImg {
+  width: 70px;
+  height: 70px;
+}
+
+@media screen and (max-width: 1200px) {
+  .cardItems {
+    min-width: 46vw;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cardItems {
+    min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .searchForm {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .searchResultsSection {
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .searchBarSection {
+    flex-wrap: wrap;
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  .content {
+    padding: 0 0.8rem;
+  }
+}

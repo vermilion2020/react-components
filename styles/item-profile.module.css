@@ -1,0 +1,88 @@
+.itemProfileSection {
+  min-width: 46%;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  border: 1px solid #662f94;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.itemProfile {
+  margin-top: -1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemProfileImage {
+  height: 350px;
+  align-self: center;
+  max-width: 100%;
+}
+
+.crossIcon {
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.7;
+  color: #282c34;
+  cursor: pointer;
+  display: flex;
+  align-self: end;
+}
+
+.crossIcon h3 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.crossIcon h3:hover {
+  opacity: 1;
+}
+
+.foodPairs {
+  list-style-type: circle;
+}
+
+.itemProfileDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  white-space: wrap;
+}
+
+.text {
+  text-align: left;
+}
+
+.supInfo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: wrap;
+}
+
+@media screen and (max-width: 1200px) {
+  .itemProfileSection {
+    min-width: 45vw;
+    height: auto;
+  }
+
+  .itemProfileImage {
+    height: 30vw; 
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .itemProfileImage {
+    height: 40vw; 
+  }
+}

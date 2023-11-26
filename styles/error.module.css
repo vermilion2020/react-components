@@ -1,0 +1,28 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contentImg {
+  width: 600px;
+  height: 450px;
+}
+
+.contentHeading {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.contentDescription {
+  font-size: 1.1rem;
+}
+
+.itemsStatMessage {
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: wrap;
+}
