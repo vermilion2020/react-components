@@ -23,7 +23,7 @@ function FormTile({ formData, active }: IFormTileProps) {
         <div className="data-row"><span className="sup-info">Confirm password:</span> {formData.confirmPassword}</div>
         <div className="data-row"><span className="sup-info">Terms and conditions:</span> {formData.tnc ? 'accepted' : 'not accepted'}</div>
         <div className="data-row"><span className="sup-info">Gender:</span> {formData.gender}</div>
-        <div className="data-row"><span className="sup-info">Country:</span> {countries[countries.findIndex(c => c.code === formData.country)].name}</div>
+        <div className="data-row"><span className="sup-info">Country:</span> {countries[countries.findIndex(c => c.code === formData.countryCode)].name}</div>
       </div>
     </section>
   );

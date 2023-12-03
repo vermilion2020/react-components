@@ -7,29 +7,41 @@ import { useDispatch } from 'react-redux';
 import { addForm } from '../../redux/features/appSlice';
 import { useNavigate } from "react-router-dom";
 import Autocomplete from '../autocomplete/Autocomplete';
-import { MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 
 function Uncontrolled() {
   const { countries } = useAppSelector(
     (state) => state.appState
   );
+  const [countryError, setCountryError] = useState('');
+
   const hiddenCountryInput = useRef() as MutableRefObject<HTMLInputElement | null>;
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const onSubmitHandler = async (data: Inputs) => {
+    if (!hiddenCountryInput.current?.value) {
+      setCountryError('Country is required, use autocomplete');
+      return;
+    }
     const file = data.image[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const img = reader.result as string;
-          const newData = { ...data, age: +data.age, image: img, id: new Date().getTime() };
-          dispatch(addForm(newData));
-          console.log(newData);
-          navigate(`/?active=${newData.id}`);
-      };
-      reader.readAsDataURL(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const img = reader.result as string;
+      const countryCode = hiddenCountryInput.current?.value ?? '';
+      const newData = { ...data, age: +data.age, image: img, id: new Date().getTime(), countryCode };
+      dispatch(addForm(newData));
+      console.log(newData);
+      navigate(`/?active=${newData.id}`);
+    };
+    reader.readAsDataURL(file);
     reset();
   };
+
+  const clearError = () => {
+    setCountryError('');
+  }
 
   const { register, handleSubmit,  formState: { errors }, reset } = useForm<Inputs>({
     resolver: yupResolver(schema),
@@ -60,9 +72,9 @@ function Uncontrolled() {
     </div>
 
     <div className="input-container">
-      <Autocomplete options={countries} hiddenCountryInput={hiddenCountryInput} />
-      <input type="hidden" {...register("country")} ref={hiddenCountryInput} />
-      <p className="error-message">{errors.country?.message}</p>
+      <Autocomplete options={countries} hiddenCountryInput={hiddenCountryInput} clearError={clearError} />
+      <input type="hidden" name="countryCode" ref={hiddenCountryInput} />
+      {countryError && <p className="error-message">{countryError}</p>}
     </div>
     
     <div className="input-container">

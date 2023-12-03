@@ -8,7 +8,7 @@ export interface IFormData {
   gender: string;
   tnc: boolean;
   image: string;
-  country: string;
+  countryCode: string;
 }
 
 export interface ICountry {

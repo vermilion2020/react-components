@@ -1,7 +1,13 @@
 import { Component, MutableRefObject } from 'react';
 import { ICountry } from '../../model/state.interface';
 
-export class Autocomplete extends Component<{ options: ICountry[], hiddenCountryInput: MutableRefObject<HTMLInputElement | null>} > {
+interface IAutocompleteProps {
+  options: ICountry[];
+  hiddenCountryInput: MutableRefObject<HTMLInputElement | null>;
+  clearError: () => void
+}
+
+export class Autocomplete extends Component<IAutocompleteProps> {
   state = {
     activeOption: 0,
     filteredOptions: [] as ICountry[],
@@ -29,7 +35,7 @@ export class Autocomplete extends Component<{ options: ICountry[], hiddenCountry
   };
 
   onClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    const { hiddenCountryInput } = this.props;
+    const { hiddenCountryInput, clearError } = this.props;
 
     this.setState({
       activeOption: 0,
@@ -39,11 +45,12 @@ export class Autocomplete extends Component<{ options: ICountry[], hiddenCountry
     });
     if (hiddenCountryInput.current) {
       hiddenCountryInput.current.value = e.currentTarget.dataset.code ?? '';
+      clearError();
     }
   };
   onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { activeOption, filteredOptions } = this.state;
-    const { hiddenCountryInput } = this.props;
+    const { hiddenCountryInput, clearError } = this.props;
 
     if (e.keyCode === 13) {
       this.setState({
@@ -53,6 +60,7 @@ export class Autocomplete extends Component<{ options: ICountry[], hiddenCountry
       });
       if (hiddenCountryInput.current) {
         hiddenCountryInput.current.value = filteredOptions[activeOption].code ?? '';
+        clearError();
       }
 
     } else if (e.keyCode === 38) {

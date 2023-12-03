@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { countries } from '../countries';
+import { countries } from '../../model/countries';
 import { IAppState, IFormData } from '../../model/state.interface';
 
 const initialState: IAppState = {

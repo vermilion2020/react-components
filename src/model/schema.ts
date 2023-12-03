@@ -78,7 +78,6 @@ export const schema = yup
         }
         return true
       }
-    }),
-    country: yup.string().required(),
+    })
   })
   .required()

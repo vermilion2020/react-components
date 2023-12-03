@@ -7,5 +7,4 @@ export type Inputs = {
   gender: string;
   tnc: boolean;
   image: Blob[];
-  country: string;
 }
