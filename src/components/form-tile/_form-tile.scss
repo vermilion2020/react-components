@@ -1,0 +1,48 @@
+
+@keyframes active-border {
+  0%  {border: 8px solid $lightBlueFontColor;} 
+  50%  {border: 8px solid $activeLinkColor;}
+  100%  {border: 8px solid $lightBlueFontColor;}
+}
+
+.form-tile {
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 30px;
+  align-items: center;
+  margin: 2rem auto;
+  border: 8px solid $lightBlueFontColor;
+  border-radius: 1rem;
+  text-align: left;
+
+  &.active {
+    border: 8px solid $lightBlueFontColor;
+    animation-name: active-border;
+    animation-duration: 4s;
+  }
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 580px;
+}
+
+.data-row {
+  padding: 0.5rem;
+}
+
+.img-container > img {
+  height: auto;
+  width: 100%;
+}
+
+.img-container {
+  width: 560px;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+

@@ -4,12 +4,10 @@ import {
   configureStore,
 } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import searchReducer from './features/searchSlice';
-import detailReducer from './features/detailSlice';
+import appReducer from './features/appSlice';
 
 const rootReducer = combineReducers({
-  searchState: searchReducer,
-  detailState: detailReducer,
+  appState: appReducer,
 });
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
