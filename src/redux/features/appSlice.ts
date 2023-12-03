@@ -12,7 +12,6 @@ export const AppSlice = createSlice({
   name: 'appSlice',
   reducers: {
     addForm: (state, action: PayloadAction<IFormData>) => {
-
       state.forms = [action.payload, ...state.forms];
     },
   }

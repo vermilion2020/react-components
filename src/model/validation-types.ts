@@ -1,6 +1,6 @@
 export type Inputs = {
   name: string;
-  age: number;
+  age: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -9,9 +9,3 @@ export type Inputs = {
   image: Blob[];
   country: string;
 }
-
-export type FileResult = {
-  name: string;
-  size: number;
-  type: string;
-}[];

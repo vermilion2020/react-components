@@ -15,7 +15,16 @@ export const schema = yup
         return true
       }
     }),
-    age: yup.number().required().min(0),
+    age: yup.string().required().test({
+      name: 'is-age',
+      skipAbsent: true,
+      test(value, ctx) {
+        if (parseInt(value) <= 0) {
+          return ctx.createError({ message: 'Age should be greater than zero' })
+        }
+        return true
+      }
+    }),
     email: yup.string().required().test({
       name: 'is-email',
       skipAbsent: true,
@@ -27,7 +36,7 @@ export const schema = yup
       }
     }),
     password: yup.string().required().test({
-      name: 'is-email',
+      name: 'is-password',
       skipAbsent: true,
       test(value, ctx) {
         if (!/[a-z]+/.test(value)) {
@@ -45,7 +54,7 @@ export const schema = yup
         return true
       }
     }),
-    confirmPassword: yup.string().defined().oneOf([yup.ref('password')], 'Passwords must match'),
+    confirmPassword: yup.string().required().defined().oneOf([yup.ref('password')], 'Passwords must match'),
     gender: yup.string().required(),
     image: yup.mixed<Blob[]>().required().test((value, ctx) => {
       const val = value[0];
