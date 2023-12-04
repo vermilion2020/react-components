@@ -6,6 +6,7 @@ import Footer from './components/layout/Footer';
 import { Provider } from 'react-redux';
 import { setupStore } from './redux/index.ts';
 import UncontrolledPage from './pages/UncontrolledPage.tsx';
+import ControlledPage from './pages/ControlledPage.tsx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/uncontrolled" element={<UncontrolledPage />} />
+        <Route path="/controlled" element={<ControlledPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />

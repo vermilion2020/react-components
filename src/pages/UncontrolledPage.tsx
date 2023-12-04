@@ -1,9 +1,9 @@
-import Controlled from "../components/uncontrolled/Uncontrolled";
+import Uncontrolled from "../components/uncontrolled/Uncontrolled";
 
 function UncontrolledPage() {
   return(
     <div className="content">
-      <Controlled />
+      <Uncontrolled />
     </div>
   );
 }

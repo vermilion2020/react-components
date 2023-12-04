@@ -152,7 +152,22 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+input::file-selector-button {
+  font-weight: bold;
+  background-color: $activeLinkColor;
+  color: #fff;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input::file-selector-button:hover {
+  background-color: $hoverLinkColor;
+}
+
 .error-message {
+  display: block;
   font-size: 0.9rem;
   color: $errorColor;
   margin: 0.2rem;
